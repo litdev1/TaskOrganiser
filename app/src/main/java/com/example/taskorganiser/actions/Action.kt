@@ -36,6 +36,7 @@ data class Action(var image: Int,
         } catch (e: Exception) {
             val a = 1
         }
+        setParents(null)
     }
 
     fun load(cacheDir: String)

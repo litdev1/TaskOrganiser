@@ -1,9 +1,11 @@
 package com.example.taskorganiser.actions
 
 import android.graphics.Color
+import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -24,9 +26,12 @@ class CustomAdapter(val mList: ArrayList<Action>,
         // inflates the card_view_design view
         // that is used to hold list item
         val view = LayoutInflater.from(parent.context)
-            .inflate(if (editable) R.layout.card_view else R.layout.card_view, parent, false)
+            .inflate(R.layout.card_view, parent, false)
 
-        return ViewHolder(view)
+        val holder = ViewHolder(view)
+        holder.textView.visibility = if(editable) View.GONE else View.VISIBLE
+        holder.textEditView.visibility = if(editable) View.VISIBLE else View.GONE
+        return holder
     }
 
     // binds the list items to a view
@@ -39,6 +44,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
 
         // sets the text to the textview from our itemHolder class
         holder.textView.text = actionViewModel.text
+        holder.textEditView.setText(actionViewModel.text)
 
         when (actionViewModel.state) {
             StateType.NONE -> holder.layoutView.setBackgroundColor(Color.WHITE)
@@ -62,14 +68,16 @@ class CustomAdapter(val mList: ArrayList<Action>,
         }
 
         //Edit text
+        /*
         if (editable) {
-            holder.textView.setOnFocusChangeListener { view, hasFocus ->
+            holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
                 if (!hasFocus) {
-                    val editText = view as TextView
+                    val editText = view as EditText
                     mList[position].text = editText.text.toString()
                 }
             }
         }
+        */
     }
 
     // return the number of the items in the list
@@ -79,9 +87,10 @@ class CustomAdapter(val mList: ArrayList<Action>,
 
     // Holds the views for adding it to image and text
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageMainView)
-        val textView: TextView = itemView.findViewById(R.id.textMainView)
-        val layoutView: LinearLayout = itemView.findViewById(R.id.layoutMainView)
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val textView: TextView = itemView.findViewById(R.id.textView)
+        val textEditView: EditText = itemView.findViewById(R.id.textEditView)
+        val layoutView: LinearLayout = itemView.findViewById(R.id.layoutView)
     }
 
     fun setTouchHelper(adapter: CustomAdapter, recyclerview: RecyclerView) : ItemTouchHelper {

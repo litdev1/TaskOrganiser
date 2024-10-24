@@ -3,8 +3,10 @@ package com.example.taskorganiser
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -42,6 +44,12 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
+            val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
+            for (i in 0..recyclerView.childCount - 1)
+            {
+                val holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
+                ApplicationClass.instance.task.children[holder.layoutPosition].text = holder.textEditView.text.toString()
+            }
             ApplicationClass.instance.data.save(cacheDir.toString())
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
