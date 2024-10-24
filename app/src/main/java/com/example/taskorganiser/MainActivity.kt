@@ -1,7 +1,9 @@
 package com.example.taskorganiser
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -10,6 +12,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.actions.Action
+import com.example.taskorganiser.actions.ActionType
 import com.example.taskorganiser.actions.CustomAdapter
 import com.example.taskorganiser.actions.StateType
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +32,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         update()
+
+        findViewById<Button>(R.id.buttonHome).setOnClickListener { view ->
+            ApplicationClass.instance.task = ApplicationClass.instance.data
+            ApplicationClass.instance.task.reset()
+            update()
+        }
+
+        findViewById<Button>(R.id.buttonBack).setOnClickListener { view ->
+            if (null != ApplicationClass.instance.task.parent) {
+                ApplicationClass.instance.task = ApplicationClass.instance.task.parent!!
+                update()
+            }
+        }
+
+        findViewById<Button>(R.id.buttonEdit).setOnClickListener { view ->
+            val intent = Intent(this, EditActivity::class.java)
+            startActivity(intent);
+        }
     }
 
     fun update()
@@ -39,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         // This will pass the ArrayList to our Adapter
+        title = ApplicationClass.instance.task.text
         val adapter = CustomAdapter(ApplicationClass.instance.task.children, this, recyclerView)
 
         // Setting the Adapter with the recyclerview

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="com.example.taskorganiser.ApplicationClass"
+        android:name=".ApplicationClass"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -14,7 +14,12 @@
         android:theme="@style/Theme.TaskOrganiser"
         tools:targetApi="31">
         <activity
+            android:name=".EditActivity"
+            android:label="Edit"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:label="Actions"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
