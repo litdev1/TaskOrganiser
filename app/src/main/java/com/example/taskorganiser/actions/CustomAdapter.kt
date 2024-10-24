@@ -10,19 +10,21 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.ApplicationClass
-import com.example.taskorganiser.MainActivity
 import com.example.taskorganiser.R
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
-class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity, val recyclerView: RecyclerView) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(val mList: ArrayList<Action>,
+                    val update: () -> (Unit),
+                    val recyclerView: RecyclerView,
+                    val editable: Boolean) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
         // that is used to hold list item
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.card_view, parent, false)
+            .inflate(if (editable) R.layout.card_view else R.layout.card_view, parent, false)
 
         return ViewHolder(view)
     }
@@ -55,15 +57,17 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity, va
             if (action.type == ActionType.TASK && action.children.isNotEmpty())
             {
                 ApplicationClass.instance.task = action
-                activity.update()
+                update()
             }
         }
 
         //Edit text
-        holder.textView.setOnFocusChangeListener { view, hasFocus ->
-            if (!hasFocus) {
-                val editText = view as TextView
-                mList[position].text = editText.text.toString()
+        if (editable) {
+            holder.textView.setOnFocusChangeListener { view, hasFocus ->
+                if (!hasFocus) {
+                    val editText = view as TextView
+                    mList[position].text = editText.text.toString()
+                }
             }
         }
     }
@@ -75,9 +79,9 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity, va
 
     // Holds the views for adding it to image and text
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
-        val textView: TextView = itemView.findViewById(R.id.textView)
-        val layoutView: LinearLayout = itemView.findViewById(R.id.layoutView)
+        val imageView: ImageView = itemView.findViewById(R.id.imageMainView)
+        val textView: TextView = itemView.findViewById(R.id.textMainView)
+        val layoutView: LinearLayout = itemView.findViewById(R.id.layoutMainView)
     }
 
     fun setTouchHelper(adapter: CustomAdapter, recyclerview: RecyclerView) : ItemTouchHelper {
@@ -93,6 +97,7 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity, va
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
+
                 // this method is called
                 // when the item is moved.
                 //return false

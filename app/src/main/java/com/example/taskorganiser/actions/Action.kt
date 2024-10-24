@@ -34,6 +34,7 @@ data class Action(var image: Int,
                 bos.write(json.toByteArray())
             }
         } catch (e: Exception) {
+            val a = 1
         }
     }
 
@@ -53,8 +54,8 @@ data class Action(var image: Int,
         } catch (e: Exception) {
             initial()
         }
-        initial()
         reset()
+        setParents(null)
     }
 
     fun initial()
@@ -67,7 +68,7 @@ data class Action(var image: Int,
                 ActionType.ACTION,
                 StateType.NONE,
                 false,
-                this,
+                null,
                 ArrayList<Action>()))
         }
         children[0].text = "Task"
@@ -78,7 +79,7 @@ data class Action(var image: Int,
             ActionType.ACTION,
             StateType.NONE,
             false,
-            children[0],
+            null,
             ArrayList<Action>()))
     }
 
@@ -100,9 +101,19 @@ data class Action(var image: Int,
     fun reset()
     {
         state = StateType.NONE
+        parent = null
         for (item in children)
         {
             item.reset();
+        }
+    }
+
+    fun setParents(parent: Action?)
+    {
+        this.parent = parent
+        for (item in children)
+        {
+            item.setParents(this);
         }
     }
 }
