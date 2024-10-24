@@ -15,7 +15,7 @@ import com.example.taskorganiser.R
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
-class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity, val recyclerView: RecyclerView) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -80,11 +80,11 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
         val layoutView: LinearLayout = itemView.findViewById(R.id.layoutView)
     }
 
-    fun setRecycler(data: ArrayList<Action>, adapter: CustomAdapter, recyclerview: RecyclerView) {
+    fun setTouchHelper(adapter: CustomAdapter, recyclerview: RecyclerView) : ItemTouchHelper {
         // on below line we are creating a method to create item touch helper
         // method for adding swipe to delete functionality.
-        // in this we are specifying drag direction and position to right
-        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+        // in this we are specifying drag direction and position
+        val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
         ) {
@@ -98,7 +98,7 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
                 //return false
                 val from = viewHolder.adapterPosition
                 val to = target.adapterPosition
-                Collections.swap(data, from, to)
+                Collections.swap(adapter.mList, from, to)
                 adapter.notifyItemMoved(from, to)
                 return true
             }
@@ -106,8 +106,8 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // this method is called when we swipe our item.
                 // on below line we are getting the item at a particular position.
-                val actionItem: Action =
-                    data.get(viewHolder.adapterPosition)
+
+                val actionItem: Action = adapter.mList.get(viewHolder.adapterPosition)
 
                 // below line is to get the position
                 // of the item at that position.
@@ -116,7 +116,7 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
                 if (direction == ItemTouchHelper.LEFT) {
                     // this method is called when item is swiped.
                     // below line is to remove item from our array list.
-                    data.removeAt(viewHolder.adapterPosition)
+                    adapter.mList.removeAt(viewHolder.adapterPosition)
 
                     // below line is to notify our item is removed from adapter.
                     adapter.notifyItemRemoved(viewHolder.adapterPosition)
@@ -128,7 +128,7 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
                             View.OnClickListener {
                                 // adding on click listener to our action of snack bar.
                                 // below line is to add our item to array list with a position.
-                                data.add(position, actionItem)
+                                adapter.mList.add(position, actionItem)
 
                                 // below line is to notify item is
                                 // added to our adapter class.
@@ -142,6 +142,7 @@ class CustomAdapter(val mList: ArrayList<Action>, val activity: MainActivity) : 
             }
             // at last we are adding this
             // to our recycler view.
-        }).attachToRecyclerView(recyclerview)
+        })
+        return itemTouchHelper
     }
 }

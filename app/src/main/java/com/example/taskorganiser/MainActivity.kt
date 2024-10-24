@@ -16,6 +16,8 @@ import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
 class MainActivity : AppCompatActivity() {
+    var itemTouchHelper: ItemTouchHelper? = null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,21 +33,26 @@ class MainActivity : AppCompatActivity() {
 
     fun update()
     {
-        val recyclerview = findViewById<RecyclerView>(R.id.home_recycler)
+        val recyclerView = findViewById<RecyclerView>(R.id.home_recycler)
 
         // this creates a vertical layout Manager
-        recyclerview.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
         // This will pass the ArrayList to our Adapter
-        val actions = ApplicationClass.instance.task.children
-        val adapter = CustomAdapter(actions, this)
+        val adapter = CustomAdapter(ApplicationClass.instance.task.children, this, recyclerView)
 
         // Setting the Adapter with the recyclerview
-        recyclerview.adapter = adapter
+        recyclerView.adapter = adapter
+
+        if (itemTouchHelper != null)
+        {
+            itemTouchHelper?.attachToRecyclerView(null)
+            itemTouchHelper = null
+        }
+        itemTouchHelper = adapter.setTouchHelper(adapter, recyclerView)
+        itemTouchHelper?.attachToRecyclerView(recyclerView)
 
         // that data has been updated.
         adapter.notifyDataSetChanged()
-
-        adapter.setRecycler(actions, adapter, recyclerview)
     }
 }
