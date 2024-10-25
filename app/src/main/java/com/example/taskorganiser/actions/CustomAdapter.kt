@@ -111,6 +111,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
                     if (!hasFocus) {
                         val editText = view as EditText
                         action.text = editText.text.toString()
+                        notifyItemChanged(position)
                     }
                 }
                 holder.sendTextView.setOnClickListener { view ->
@@ -118,6 +119,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
                     val action = mList[position]
                     val checkBox = view as CheckBox
                     action.sendText = checkBox.isChecked
+                    notifyItemChanged(position)
                 }
                 holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
                     val position = holder.layoutPosition
@@ -169,72 +171,80 @@ class CustomAdapter(val mList: ArrayList<Action>,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-
-                if (!editable) return false
-                // this method is called
-                // when the item is moved.
-                //return false
-                val from = viewHolder.adapterPosition
-                val to = target.adapterPosition
-                Collections.swap(adapter.mList, from, to)
-                adapter.notifyItemMoved(from, to)
-                return true
+                try {
+                    if (!editable) return false
+                    // this method is called
+                    // when the item is moved.
+                    //return false
+                    val from = viewHolder.adapterPosition
+                    val to = target.adapterPosition
+                    Collections.swap(adapter.mList, from, to)
+                    adapter.notifyItemMoved(from, to)
+                    return true
+                }
+                catch (e: Exception)
+                {
+                    return false
+                }
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 // this method is called when we swipe our item.
                 // on below line we are getting the item at a particular position.
+                try {
+                    val position = viewHolder.adapterPosition
+                    val action: Action = adapter.mList.get(position)
 
-                val position = viewHolder.adapterPosition
-                val action: Action = adapter.mList.get(position)
+                    if (direction == ItemTouchHelper.LEFT) {
 
-                if (direction == ItemTouchHelper.LEFT) {
+                        // this method is called when item is swiped.
+                        // below line is to remove item from our array list.
+                        adapter.mList.removeAt(position)
 
-                    // this method is called when item is swiped.
-                    // below line is to remove item from our array list.
-                    adapter.mList.removeAt(position)
+                        // below line is to notify our item is removed from adapter.
+                        adapter.notifyItemRemoved(position)
 
-                    // below line is to notify our item is removed from adapter.
-                    adapter.notifyItemRemoved(position)
-
-                    if (editable) {
-                        // below line is to display our snackbar with action.
-                        val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, 2000)
+                        if (editable) {
+                            // below line is to display our snackbar with action.
+                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, 2000)
+                            /*
+                            val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
+                            layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout
+                            layoutParams.anchorGravity = Gravity.TOP
+                            layoutParams.gravity = Gravity.TOP
+                            snackBar.view.layoutParams = layoutParams
+                            */
+                            snackBar.setAnchorView(viewHolder.itemView)
+                            snackBar.setAction(
+                                "Undo",
+                                View.OnClickListener {
+                                    // adding on click listener to our action of snack bar.
+                                    // below line is to add our item to array list with a position.
+                                    adapter.mList.add(position, action)
+                                    // below line is to notify item is
+                                    // added to our adapter class.
+                                    adapter.notifyItemInserted(position)
+                                }).show()
+                        }
+                        else
+                        {
+                            action.state = StateType.NONE
+                            adapter.mList.add(position, action)
+                            adapter.notifyItemInserted(position)
+                        }
+                    } else {
                         /*
-                        val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
-                        layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout
-                        layoutParams.anchorGravity = Gravity.TOP
-                        layoutParams.gravity = Gravity.TOP
-                        snackBar.view.layoutParams = layoutParams
+                        actionItem.state = StateType.YES
+                        actionItem.image = R.drawable.ic_dashboard_black_24dp
+                        adapter.notifyItemChanged(position)
                         */
-                        snackBar.setAnchorView(viewHolder.itemView)
-                        snackBar.setAction(
-                            "Undo",
-                            View.OnClickListener {
-                                // adding on click listener to our action of snack bar.
-                                // below line is to add our item to array list with a position.
-                                adapter.mList.add(position, action)
-                                // below line is to notify item is
-                                // added to our adapter class.
-                                adapter.notifyItemInserted(position)
-                            }).show()
                     }
-                    else
-                    {
-                        action.state = StateType.NONE
-                        adapter.mList.add(position, action)
-                        adapter.notifyItemInserted(position)
-                    }
-                } else {
-                    /*
-                    actionItem.state = StateType.YES
-                    actionItem.image = R.drawable.ic_dashboard_black_24dp
-                    adapter.notifyItemChanged(position)
-                    */
+                }
+                catch (e: Exception)
+                {
+                    val a = 1
                 }
             }
-            // at last we are adding this
-            // to our recycler view.
         })
         return itemTouchHelper
     }

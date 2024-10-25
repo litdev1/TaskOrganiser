@@ -103,14 +103,16 @@ class EditActivity : AppCompatActivity() {
 
     fun update()
     {
-        val view = findViewById<ConstraintLayout>(R.id.edit)
-        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+        //val view = findViewById<ConstraintLayout>(R.id.edit)
+        //val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        //inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
 
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
 
         // this creates a vertical layout Manager
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        if (recyclerView.layoutManager == null) {
+            recyclerView.layoutManager = LinearLayoutManager(this)
+        }
 
         // This will pass the ArrayList to our Adapter
         title = ApplicationClass.instance.task.text

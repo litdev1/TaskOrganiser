@@ -1,6 +1,7 @@
 package com.example.taskorganiser
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -80,7 +81,9 @@ class MainActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
 
         // this creates a vertical layout Manager
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        if (recyclerView.layoutManager == null) {
+            recyclerView.layoutManager = LinearLayoutManager(this)
+        }
 
         // This will pass the ArrayList to our Adapter
         title = ApplicationClass.instance.task.text

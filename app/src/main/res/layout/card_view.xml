@@ -44,11 +44,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="15dp"
+                android:selectAllOnFocus="true"
                 android:singleLine="false"
                 android:text="Action"
+                android:textCursorDrawable="@null"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textCursorDrawable="@null"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
