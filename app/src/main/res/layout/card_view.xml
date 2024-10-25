@@ -34,7 +34,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="15dp"
                 android:singleLine="false"
-                android:text="Item"
+                android:text="Action"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -45,9 +45,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginLeft="15dp"
                 android:singleLine="false"
-                android:text="Item"
+                android:text="Action"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textCursorDrawable="@null"/>
 
         </LinearLayout>
 
@@ -83,7 +84,7 @@
                 android:id="@+id/checkBoxText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:gravity="left|center_vertical"
                 android:text="Send SMS" />
 
         </LinearLayout>

@@ -1,11 +1,7 @@
 package com.example.taskorganiser.actions
 
-import android.app.Activity
 import android.graphics.Color
-import android.os.Build
 import android.telephony.SmsManager
-import android.text.Editable
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +11,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -49,27 +44,23 @@ class CustomAdapter(val mList: ArrayList<Action>,
 
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         try {
             val actionViewModel = mList[position]
-            if (editable || actionViewModel.state == StateType.NONE) {
-                actionViewModel.image =
-                    if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
-            } else {
-                actionViewModel.image =
-                    if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
-            }
 
             // sets the image to the imageview from our itemHolder class
-            holder.imageView.setImageResource(actionViewModel.image)
+            if (editable || actionViewModel.state == StateType.NONE) {
+                val image = if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
+                holder.imageView.setImageResource(image)
+            } else {
+                val image = if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
+                holder.imageView.setImageResource(image)
+            }
 
             // sets the text to the textview from our itemHolder class
             holder.textView.text = actionViewModel.text
             holder.textEditView.setText(actionViewModel.text)
             holder.sendTextView.isChecked = actionViewModel.sendText
             holder.chipGroupView.check(if (actionViewModel.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
-            //holder.taskChipView.isChecked = actionViewModel.type == ActionType.TASK
-            //holder.actionChipView.isChecked = actionViewModel.type != ActionType.TASK
 
             val color = MaterialColors.getColor(
                 holder.itemView.context,
@@ -95,13 +86,13 @@ class CustomAdapter(val mList: ArrayList<Action>,
                 val oldState = action.state
                 action.state = StateType.DONE
                 notifyItemChanged(position)
-                if (action.type == ActionType.TASK /*&& action.children.isNotEmpty()*/) {
+                if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
                     ApplicationClass.instance.task = action
                     update()
                 }
-                if (!editable && oldState == StateType.NONE && action.sendText) {
-                    val phoneNumber = "07881432137"
-                    val message = action.text + " was pressed"
+                if (ApplicationClass.instance.settings.useSMS && !editable && oldState == StateType.NONE && action.sendText) {
+                    val phoneNumber = ApplicationClass.instance.settings.phone
+                    val message = ApplicationClass.instance.settings.user + " completed action : " + action.text
                     try {
                         val smsManager = view.context.getSystemService(SmsManager::class.java)
                         smsManager.sendTextMessage(phoneNumber, null, message, null, null)
@@ -171,7 +162,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
         // in this we are specifying drag direction and position
         val itemTouchHelper = ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            ItemTouchHelper.LEFT
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -194,24 +185,21 @@ class CustomAdapter(val mList: ArrayList<Action>,
                 // this method is called when we swipe our item.
                 // on below line we are getting the item at a particular position.
 
-                val actionItem: Action = adapter.mList.get(viewHolder.adapterPosition)
-
-                // below line is to get the position
-                // of the item at that position.
                 val position = viewHolder.adapterPosition
+                val action: Action = adapter.mList.get(position)
 
                 if (direction == ItemTouchHelper.LEFT) {
 
                     // this method is called when item is swiped.
                     // below line is to remove item from our array list.
-                    adapter.mList.removeAt(viewHolder.adapterPosition)
+                    adapter.mList.removeAt(position)
 
                     // below line is to notify our item is removed from adapter.
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    adapter.notifyItemRemoved(position)
 
                     if (editable) {
                         // below line is to display our snackbar with action.
-                        val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + actionItem.text, 2000)
+                        val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, 2000)
                         /*
                         val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
                         layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout
@@ -225,7 +213,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
                             View.OnClickListener {
                                 // adding on click listener to our action of snack bar.
                                 // below line is to add our item to array list with a position.
-                                adapter.mList.add(position, actionItem)
+                                adapter.mList.add(position, action)
                                 // below line is to notify item is
                                 // added to our adapter class.
                                 adapter.notifyItemInserted(position)
@@ -233,8 +221,8 @@ class CustomAdapter(val mList: ArrayList<Action>,
                     }
                     else
                     {
-                        actionItem.state = StateType.NONE
-                        adapter.mList.add(position, actionItem)
+                        action.state = StateType.NONE
+                        adapter.mList.add(position, action)
                         adapter.notifyItemInserted(position)
                     }
                 } else {

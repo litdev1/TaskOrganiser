@@ -21,11 +21,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toTopOf="@+id/headerMain"
+                app:layout_constraintBottom_toTopOf="@+id/footerMain"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/headerMain"
+                android:id="@+id/footerMain"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center_horizontal"
@@ -40,6 +40,8 @@
                     android:drawableLeft="@drawable/ic_home_black_24dp"
                     android:gravity="left|center_vertical"
                     android:text="Home"
+                    app:cornerRadius="10dp"
+                    android:layout_marginHorizontal="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -51,6 +53,8 @@
                     android:drawableLeft="@drawable/ic_undo_24dp"
                     android:gravity="left|center_vertical"
                     android:text="Back"
+                    app:cornerRadius="10dp"
+                    android:layout_marginHorizontal="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

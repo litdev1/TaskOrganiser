@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Toast
 import com.example.taskorganiser.ApplicationClass
-import com.example.taskorganiser.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -16,8 +15,7 @@ import java.io.InputStreamReader
 
 @SuppressLint("UnsafeOptInUsageError")
 @Serializable
-data class Action(var image: Int,
-                  var text: String,
+data class Action(var text: String,
                   var type: ActionType,
                   var state: StateType,
                   var sendText: Boolean,
@@ -31,12 +29,16 @@ data class Action(var image: Int,
             BufferedOutputStream(FileOutputStream(File(cacheDir, "version"))).use { bos ->
                 bos.write(ApplicationClass.instance.version.toString().toByteArray())
             }
-            val json = serialise()
+            BufferedOutputStream(FileOutputStream(File(cacheDir, "settings.json"))).use { bos ->
+                val json = Json.encodeToString(ApplicationClass.instance.settings)
+                bos.write(json.toByteArray())
+            }
             BufferedOutputStream(FileOutputStream(File(cacheDir, "data.json"))).use { bos ->
+                val json = serialise()
                 bos.write(json.toByteArray())
             }
         } catch (e: Exception) {
-            Toast.makeText(context, "Saving data failed", 2000).show()
+            Toast.makeText(context, "Saving action data failed", 2000).show()
         }
         setParents(null)
     }
@@ -48,18 +50,23 @@ data class Action(var image: Int,
                 val ver = bos.readText().toInt()
                 if (ver <= ApplicationClass.instance.version)
                 {
+                    InputStreamReader(FileInputStream(File(cacheDir, "settings.json"))).use { bos ->
+                        val json = bos.readText()
+                        ApplicationClass.instance.settings = Json.decodeFromString<Settings>(json)
+                    }
                     InputStreamReader(FileInputStream(File(cacheDir, "data.json"))).use { bos ->
                         val json = bos.readText()
                         deserialise(json)
                     }
                 }
             }
+            reset()
+            setParents(null)
         } catch (e: Exception) {
-            Toast.makeText(context, "Loading data failed", 2000).show()
+            Toast.makeText(context, "Loading action data failed", 2000).show()
             initial()
+            save(cacheDir, context)
         }
-        reset()
-        setParents(null)
         ApplicationClass.instance.task = this
     }
 
@@ -68,7 +75,6 @@ data class Action(var image: Int,
         children.clear()
         for (i in 1..10) {
             children.add(Action(
-                R.drawable.ic_action_24dp,
                 "Action $i\nMore data",
                 ActionType.ACTION,
                 StateType.NONE,
@@ -83,7 +89,6 @@ data class Action(var image: Int,
 
     fun default() : Action {
         return Action(
-            R.drawable.ic_home_black_24dp,
             "Action",
             ActionType.ACTION,
             StateType.NONE,

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.actions.CustomAdapter
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null;
@@ -58,7 +57,10 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this, EditActivity::class.java)
                 startActivity(intent);
             }
-            R.id.settings -> Toast.makeText(this,"Settings Selected",Toast.LENGTH_SHORT).show()
+            R.id.settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item)
     }

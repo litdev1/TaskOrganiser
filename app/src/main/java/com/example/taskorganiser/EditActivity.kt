@@ -2,29 +2,23 @@ package com.example.taskorganiser
 
 import android.content.Intent
 import android.os.Bundle
-import android.telephony.SmsManager
 import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskorganiser.actions.Action
 import com.example.taskorganiser.actions.ActionType
 import com.example.taskorganiser.actions.CustomAdapter
-import com.example.taskorganiser.actions.StateType
-import com.google.android.material.chip.Chip
-import android.widget.Toast
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.InputMethodManager
+import androidx.constraintlayout.widget.ConstraintLayout
 
 class EditActivity : AppCompatActivity() {
-    var itemTouchHelper: ItemTouchHelper? = null;
+    var itemTouchHelper: ItemTouchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -99,13 +93,20 @@ class EditActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
-            R.id.settings -> Toast.makeText(this,"Settings Selected",Toast.LENGTH_SHORT).show()
+            R.id.settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent);
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     fun update()
     {
+        val view = findViewById<ConstraintLayout>(R.id.edit)
+        val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
 
         // this creates a vertical layout Manager
@@ -122,6 +123,7 @@ class EditActivity : AppCompatActivity() {
             itemTouchHelper?.attachToRecyclerView(null)
             itemTouchHelper = null
         }
+
         itemTouchHelper = adapter.setTouchHelper(adapter, recyclerView, adapter.editable)
         itemTouchHelper?.attachToRecyclerView(recyclerView)
 
