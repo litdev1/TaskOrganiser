@@ -25,6 +25,6 @@ class ApplicationClass: Application() {
         super.onCreate()
 
         instance = this
-        data.load(cacheDir.toString())
+        data.load(cacheDir.toString(), this)
     }
 }

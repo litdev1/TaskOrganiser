@@ -1,6 +1,8 @@
 package com.example.taskorganiser.actions
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.widget.Toast
 import com.example.taskorganiser.ApplicationClass
 import com.example.taskorganiser.R
 import kotlinx.serialization.Serializable
@@ -22,7 +24,7 @@ data class Action(var image: Int,
                   var parent: Action?,
                   val children: ArrayList<Action>)
 {
-    fun save(cacheDir: String)
+    fun save(cacheDir: String, context: Context)
     {
         reset()
         try {
@@ -34,12 +36,12 @@ data class Action(var image: Int,
                 bos.write(json.toByteArray())
             }
         } catch (e: Exception) {
-            val a = 1
+            Toast.makeText(context, "Saving data FAILED", 2000).show()
         }
         setParents(null)
     }
 
-    fun load(cacheDir: String)
+    fun load(cacheDir: String, context: Context)
     {
         try {
             InputStreamReader(FileInputStream(File(cacheDir, "version"))).use { bos ->
@@ -53,6 +55,7 @@ data class Action(var image: Int,
                 }
             }
         } catch (e: Exception) {
+            Toast.makeText(context, "Loading data FAILED", 2000).show()
             initial()
         }
         reset()
@@ -74,14 +77,18 @@ data class Action(var image: Int,
         }
         children[0].text = "Task"
         children[0].type = ActionType.TASK
-        children[0].children.add(Action(
+        children[0].children.add(default())
+    }
+
+    fun default() : Action {
+        return Action(
             R.drawable.ic_home_black_24dp,
-            "Item",
+            "Action",
             ActionType.ACTION,
             StateType.NONE,
             false,
             null,
-            ArrayList<Action>()))
+            ArrayList<Action>())
     }
 
     fun serialise(): String
