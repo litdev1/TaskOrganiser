@@ -55,7 +55,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonAdd).setOnClickListener { view ->
-            ApplicationClass.instance.task.children.add(ApplicationClass.instance.task.default())
+            ApplicationClass.instance.task.children.add(ApplicationClass.instance.data.default())
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             update()
@@ -63,17 +63,33 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
-            for (i in 0..recyclerView.childCount - 1)
-            {
-                val holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
-                ApplicationClass.instance.task.children[holder.layoutPosition].text = holder.textEditView.text.toString()
-                ApplicationClass.instance.task.children[holder.layoutPosition].sendText = holder.sendTextView.isChecked
-                ApplicationClass.instance.task.children[holder.layoutPosition].type = if(holder.taskChipView.isChecked) ActionType.TASK else ActionType.ACTION
-            }
-            ApplicationClass.instance.data.save(cacheDir.toString(), this)
+            ApplicationClass.instance.data.load(cacheDir.toString(), this)
+            update()
+            /*
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
+            */
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
+        for (i in 0..recyclerView.childCount - 1)
+        {
+            val holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
+            ApplicationClass.instance.task.children[holder.layoutPosition].text = holder.textEditView.text.toString()
+            ApplicationClass.instance.task.children[holder.layoutPosition].sendText = holder.sendTextView.isChecked
+            ApplicationClass.instance.task.children[holder.layoutPosition].type = if(holder.taskChipView.isChecked) ActionType.TASK else ActionType.ACTION
+        }
+        ApplicationClass.instance.data.save(cacheDir.toString(), this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        update()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

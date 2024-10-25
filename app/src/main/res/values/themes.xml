@@ -2,8 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TaskOrganiser" parent="Theme.Material3.DayNight">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorSecondary">@color/secondary</item>
     </style>
 
-    <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser" />
+    <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
+    </style>
 </resources>

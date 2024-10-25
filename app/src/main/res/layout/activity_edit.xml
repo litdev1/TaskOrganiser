@@ -48,16 +48,18 @@
                     android:id="@+id/buttonEditBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_undo_24dp"
+                    android:gravity="left|center_vertical"
                     android:text="Back"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/buttonEditHome"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/buttonAdd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add task"
+                    android:text="Add action"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -66,7 +68,7 @@
                     android:id="@+id/buttonEndEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Save edits"
+                    android:text="Undo edits"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

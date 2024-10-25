@@ -36,7 +36,7 @@ data class Action(var image: Int,
                 bos.write(json.toByteArray())
             }
         } catch (e: Exception) {
-            Toast.makeText(context, "Saving data FAILED", 2000).show()
+            Toast.makeText(context, "Saving data failed", 2000).show()
         }
         setParents(null)
     }
@@ -55,11 +55,12 @@ data class Action(var image: Int,
                 }
             }
         } catch (e: Exception) {
-            Toast.makeText(context, "Loading data FAILED", 2000).show()
+            Toast.makeText(context, "Loading data failed", 2000).show()
             initial()
         }
         reset()
         setParents(null)
+        ApplicationClass.instance.task = this
     }
 
     fun initial()
@@ -110,6 +111,10 @@ data class Action(var image: Int,
     {
         state = StateType.NONE
         parent = null
+        if (type != ActionType.HOME && type != ActionType.TASK)
+        {
+            children.clear()
+        }
         for (item in children)
         {
             item.reset();

@@ -63,6 +63,16 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        update()
+    }
+
     fun update()
     {
         val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)

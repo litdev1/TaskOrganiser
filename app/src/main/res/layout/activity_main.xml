@@ -48,6 +48,8 @@
                     android:id="@+id/buttonMainBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_undo_24dp"
+                    android:gravity="left|center_vertical"
                     android:text="Back"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

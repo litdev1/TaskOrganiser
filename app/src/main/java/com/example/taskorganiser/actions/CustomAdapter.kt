@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import android.telephony.SmsManager
 import android.text.Editable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,12 +15,15 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.ApplicationClass
 import com.example.taskorganiser.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
@@ -46,75 +50,101 @@ class CustomAdapter(val mList: ArrayList<Action>,
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val actionViewModel = mList[position]
-        actionViewModel.image = if(actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
-
-        // sets the image to the imageview from our itemHolder class
-        holder.imageView.setImageResource(actionViewModel.image)
-
-        // sets the text to the textview from our itemHolder class
-        holder.textView.text = actionViewModel.text
-        holder.textEditView.setText(actionViewModel.text)
-        holder.sendTextView.isChecked = actionViewModel.sendText
-        holder.taskChipView.isChecked = actionViewModel.type == ActionType.TASK
-        holder.actionChipView.isChecked = actionViewModel.type != ActionType.TASK
-
-        when (actionViewModel.state) {
-            StateType.NONE -> holder.layoutView.setBackgroundColor(Color.WHITE)
-            StateType.DONE -> holder.layoutView.setBackgroundColor(Color.RED)
-            StateType.YES -> holder.layoutView.setBackgroundColor(Color.GREEN)
-            StateType.NO -> holder.layoutView.setBackgroundColor(Color.BLUE)
-            else -> holder.layoutView.setBackgroundColor(Color.WHITE)
-        }
-
-        //Click
-        holder.itemView.setOnClickListener { view ->
-            val position = holder.layoutPosition
-            val action = mList[position]
-            action.state = StateType.DONE
-            notifyItemChanged(position)
-            if (action.type == ActionType.TASK /*&& action.children.isNotEmpty()*/)
-            {
-                ApplicationClass.instance.task = action
-                update()
+        try {
+            val actionViewModel = mList[position]
+            if (editable || actionViewModel.state == StateType.NONE) {
+                actionViewModel.image =
+                    if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
+            } else {
+                actionViewModel.image =
+                    if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
             }
-            if (!editable && action.sendText) {
-                val phoneNumber = "07881432137"
-                val message = action.text + " was pressed"
-                try {
-                    val smsManager = view.context.getSystemService(SmsManager::class.java)
-                    smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                    Toast.makeText(view.context, message, 2000).show()
-                }
-                catch (e: Exception)
-                {
-                    Toast.makeText(view.context, message+" FAILED", 2000).show()
+
+            // sets the image to the imageview from our itemHolder class
+            holder.imageView.setImageResource(actionViewModel.image)
+
+            // sets the text to the textview from our itemHolder class
+            holder.textView.text = actionViewModel.text
+            holder.textEditView.setText(actionViewModel.text)
+            holder.sendTextView.isChecked = actionViewModel.sendText
+            holder.chipGroupView.check(if (actionViewModel.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
+            //holder.taskChipView.isChecked = actionViewModel.type == ActionType.TASK
+            //holder.actionChipView.isChecked = actionViewModel.type != ActionType.TASK
+
+            val color = MaterialColors.getColor(
+                holder.itemView.context,
+                if (actionViewModel.type == ActionType.TASK) com.google.android.material.R.attr.colorPrimary else com.google.android.material.R.attr.colorSecondary,
+                Color.WHITE
+            )
+            val colorDark = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
+            if (editable) {
+                holder.layoutView.setBackgroundColor(color)
+            } else {
+                when (actionViewModel.state) {
+                    StateType.NONE -> holder.layoutView.setBackgroundColor(color)
+                    StateType.DONE -> holder.layoutView.setBackgroundColor(colorDark)
+                    StateType.YES -> holder.layoutView.setBackgroundColor(colorDark)
+                    StateType.NO -> holder.layoutView.setBackgroundColor(colorDark)
                 }
             }
-        }
 
-        //Edit
-        if (editable) {
-            holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
-                if (!hasFocus) {
-                    val editText = view as EditText
-                    mList[position].text = editText.text.toString()
-                }
-            }
-            holder.sendTextView.setOnClickListener { view ->
-                val checkBox = view as CheckBox
-                mList[position].sendText = checkBox.isChecked
-            }
-            holder.taskChipView .setOnClickListener { view ->
-                val chip = view as Chip
-                mList[position].type = if(chip.isChecked) ActionType.TASK else ActionType.ACTION
+            //Click
+            holder.itemView.setOnClickListener { view ->
+                val position = holder.layoutPosition
+                val action = mList[position]
+                val oldState = action.state
+                action.state = StateType.DONE
                 notifyItemChanged(position)
+                if (action.type == ActionType.TASK /*&& action.children.isNotEmpty()*/) {
+                    ApplicationClass.instance.task = action
+                    update()
+                }
+                if (!editable && oldState == StateType.NONE && action.sendText) {
+                    val phoneNumber = "07881432137"
+                    val message = action.text + " was pressed"
+                    try {
+                        val smsManager = view.context.getSystemService(SmsManager::class.java)
+                        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                        Toast.makeText(view.context, message, 2000).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(view.context, "SMS failed", 2000).show()
+                    }
+                }
             }
-            holder.actionChipView .setOnClickListener { view ->
-                val chip = view as Chip
-                mList[position].type = if(chip.isChecked) ActionType.ACTION else ActionType.TASK
-                notifyItemChanged(position)
+
+            //Edit
+            if (editable) {
+                holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
+                    val position = holder.layoutPosition
+                    val action = mList[position]
+                    if (!hasFocus) {
+                        val editText = view as EditText
+                        action.text = editText.text.toString()
+                    }
+                }
+                holder.sendTextView.setOnClickListener { view ->
+                    val position = holder.layoutPosition
+                    val action = mList[position]
+                    val checkBox = view as CheckBox
+                    action.sendText = checkBox.isChecked
+                }
+                holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
+                    val position = holder.layoutPosition
+                    val action = mList[position]
+                    if (checkedIds.size > 0) {
+                        var newType =
+                            if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
+                        if (action.type != newType) {
+                            action.type = newType
+                            notifyItemChanged(position)
+                        }
+                    }
+                }
             }
+        }
+        catch (e: Exception)
+        {
+            val a = 1
         }
     }
 
@@ -181,18 +211,25 @@ class CustomAdapter(val mList: ArrayList<Action>,
 
                     if (editable) {
                         // below line is to display our snackbar with action.
-                        Snackbar.make(recyclerview, "Deleted " + actionItem.text, 2000)
-                            .setAction(
-                                "Undo",
-                                View.OnClickListener {
-                                    // adding on click listener to our action of snack bar.
-                                    // below line is to add our item to array list with a position.
-                                    adapter.mList.add(position, actionItem)
-
-                                    // below line is to notify item is
-                                    // added to our adapter class.
-                                    adapter.notifyItemInserted(position)
-                                }).show()
+                        val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + actionItem.text, 2000)
+                        /*
+                        val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
+                        layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout
+                        layoutParams.anchorGravity = Gravity.TOP
+                        layoutParams.gravity = Gravity.TOP
+                        snackBar.view.layoutParams = layoutParams
+                        */
+                        snackBar.setAnchorView(viewHolder.itemView)
+                        snackBar.setAction(
+                            "Undo",
+                            View.OnClickListener {
+                                // adding on click listener to our action of snack bar.
+                                // below line is to add our item to array list with a position.
+                                adapter.mList.add(position, actionItem)
+                                // below line is to notify item is
+                                // added to our adapter class.
+                                adapter.notifyItemInserted(position)
+                            }).show()
                     }
                     else
                     {
