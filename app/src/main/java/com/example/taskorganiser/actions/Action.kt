@@ -67,7 +67,7 @@ data class Action(var image: Int,
         children.clear()
         for (i in 1..10) {
             children.add(Action(
-                R.drawable.ic_home_black_24dp,
+                R.drawable.ic_action_24dp,
                 "Action $i\nMore data",
                 ActionType.ACTION,
                 StateType.NONE,

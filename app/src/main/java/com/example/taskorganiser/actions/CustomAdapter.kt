@@ -47,6 +47,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         val actionViewModel = mList[position]
+        actionViewModel.image = if(actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
 
         // sets the image to the imageview from our itemHolder class
         holder.imageView.setImageResource(actionViewModel.image)
@@ -64,6 +65,32 @@ class CustomAdapter(val mList: ArrayList<Action>,
             StateType.YES -> holder.layoutView.setBackgroundColor(Color.GREEN)
             StateType.NO -> holder.layoutView.setBackgroundColor(Color.BLUE)
             else -> holder.layoutView.setBackgroundColor(Color.WHITE)
+        }
+
+        //Click
+        holder.itemView.setOnClickListener { view ->
+            val position = holder.layoutPosition
+            val action = mList[position]
+            action.state = StateType.DONE
+            notifyItemChanged(position)
+            if (action.type == ActionType.TASK /*&& action.children.isNotEmpty()*/)
+            {
+                ApplicationClass.instance.task = action
+                update()
+            }
+            if (!editable && action.sendText) {
+                val phoneNumber = "07881432137"
+                val message = action.text + " was pressed"
+                try {
+                    val smsManager = view.context.getSystemService(SmsManager::class.java)
+                    smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                    Toast.makeText(view.context, message, 2000).show()
+                }
+                catch (e: Exception)
+                {
+                    Toast.makeText(view.context, message+" FAILED", 2000).show()
+                }
+            }
         }
 
         //Edit
@@ -87,33 +114,6 @@ class CustomAdapter(val mList: ArrayList<Action>,
                 val chip = view as Chip
                 mList[position].type = if(chip.isChecked) ActionType.ACTION else ActionType.TASK
                 notifyItemChanged(position)
-            }
-        }
-        else
-        {
-            holder.itemView.setOnClickListener { view ->
-                val position = holder.layoutPosition
-                val action = mList[position]
-                action.state = StateType.DONE
-                notifyItemChanged(position)
-                if (action.type == ActionType.TASK /*&& action.children.isNotEmpty()*/)
-                {
-                    ApplicationClass.instance.task = action
-                    update()
-                }
-                if (action.sendText) {
-                    val phoneNumber = "07881432137"
-                    val message = action.text + " was pressed"
-                    try {
-                        val smsManager = view.context.getSystemService(SmsManager::class.java)
-                        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                        Toast.makeText(view.context, message, 2000).show()
-                    }
-                    catch (e: Exception)
-                    {
-                        Toast.makeText(view.context, message+" FAILED", 2000).show()
-                    }
-                }
             }
         }
     }
