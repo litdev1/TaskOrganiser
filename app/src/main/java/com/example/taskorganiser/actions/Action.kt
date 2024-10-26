@@ -88,13 +88,13 @@ data class Action(var text: String,
         children.add(default())
         children[1].text = "Shopping List"
         children[1].type = ActionType.TASK
-        children[1].children.add(default()); children[1].children[0].text = "Milk"
-        children[1].children.add(default()); children[1].children[1].text = "Bread"
-        children[1].children.add(default()); children[1].children[2].text = "Eggs"
-        children[1].children.add(default()); children[1].children[3].text = "Cheese"
-        children[1].children.add(default()); children[1].children[4].text = "Biscuits"
-        children[1].children.add(default()); children[1].children[5].text = "Potatoes"
-        children[1].children.add(default()); children[1].children[6].text = "Onions"
+        children[1].children.add(default()); children[1].children[0].text = "Bread"
+        children[1].children.add(default()); children[1].children[1].text = "Milk"
+        children[1].children.add(default()); children[1].children[2].text = "Cheese"
+        children[1].children.add(default()); children[1].children[3].text = "Eggs"
+        children[1].children.add(default()); children[1].children[4].text = "Potatoes"
+        children[1].children.add(default()); children[1].children[5].text = "Onions"
+        children[1].children.add(default()); children[1].children[6].text = "Biscuits"
 
         children.add(default())
         children[2].text = "SMS test"
