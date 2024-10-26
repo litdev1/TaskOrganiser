@@ -165,7 +165,6 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         setVisuals(holder, action, position)
                     }
                 }
-                notifyItemChanged(position)
             }
         }
     }

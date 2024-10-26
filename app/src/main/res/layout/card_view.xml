@@ -70,6 +70,7 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:chipCornerRadius="10dp"
                     android:text="Task" />
 
                 <com.google.android.material.chip.Chip
@@ -77,6 +78,7 @@
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    app:chipCornerRadius="10dp"
                     android:text="Action" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -86,6 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
+                android:buttonTint="#000000"
                 android:text="Send SMS" />
 
         </LinearLayout>
