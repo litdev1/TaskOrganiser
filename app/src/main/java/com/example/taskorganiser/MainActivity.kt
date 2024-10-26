@@ -75,8 +75,6 @@ class MainActivity : AppCompatActivity() {
         update()
 
         findViewById<Button>(R.id.buttonMainHome).setOnClickListener { view ->
-            ApplicationClass.instance.data.reset()
-            ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
             if (ApplicationClass.instance.task.children.size > 0) {
