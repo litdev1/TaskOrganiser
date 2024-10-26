@@ -57,20 +57,24 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
+            android:gravity="left|center_vertical"
             android:padding="5dp">
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/chipGroupAction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleSelection="true">
+                app:singleSelection="true"
+                app:selectionRequired="true">
 
+                <!-- We reverse the chips to look better -->
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTask"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipCornerRadius="10dp"
+                    android:textColor="@color/black"
                     android:text="Task" />
 
                 <com.google.android.material.chip.Chip
@@ -79,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipCornerRadius="10dp"
+                    android:textColor="@color/black"
                     android:text="Action" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -88,8 +93,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
-                android:buttonTint="#000000"
-                android:text="Send SMS" />
+                android:text="Send SMS"
+                android:textColor="@color/black"
+                android:theme="@style/checkBoxStyle"/>
 
         </LinearLayout>
     </LinearLayout>

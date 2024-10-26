@@ -3,6 +3,8 @@ package com.example.taskorganiser
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
@@ -43,6 +45,33 @@ class SettingsActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.editTextUser).setText(ApplicationClass.instance.settings.user)
         findViewById<EditText>(R.id.editTextPhone).setText(ApplicationClass.instance.settings.phone)
         findViewById<CheckBox>(R.id.checkBoxUseSMS).isChecked = ApplicationClass.instance.settings.useSMS
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId){
+            R.id.home -> {
+                ApplicationClass.instance.data.reset()
+                ApplicationClass.instance.data.setParents(null)
+                val intent = Intent(this, EditActivity::class.java)
+                startActivity(intent);
+            }
+            R.id.editTasks -> {
+                ApplicationClass.instance.data.reset()
+                ApplicationClass.instance.data.setParents(null)
+                val intent = Intent(this, EditActivity::class.java)
+                startActivity(intent);
+            }
+            R.id.settings -> {
+                val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent);
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onPause() {

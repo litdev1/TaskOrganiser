@@ -8,4 +8,12 @@
 
     <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
     </style>
+
+    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
+        <item name="colorAccent">#FF000000</item>
+    </style>
+
+    <style name="Widget.MyApp.Button" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?attr/colorSecondary</item>
+    </style>
 </resources>

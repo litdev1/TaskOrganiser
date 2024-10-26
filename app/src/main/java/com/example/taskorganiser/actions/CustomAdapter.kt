@@ -111,8 +111,9 @@ class CustomAdapter(var mList: ArrayList<Action>,
             val oldState = action.state
             action.state = StateType.DONE
             if (!editable && oldState != action.state) {
-                setControls(holder, action, position)
-                setVisuals(holder, action, position)
+                notifyItemChanged(position)
+//                setControls(holder, action, position)
+//                setVisuals(holder, action, position)
             }
             if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
                 ApplicationClass.instance.task = action
@@ -165,8 +166,9 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
                     if (action.type != newType) {
                         action.type = newType
-                        setControls(holder, action, position)
-                        setVisuals(holder, action, position)
+                        notifyItemChanged(position)
+//                        setControls(holder, action, position)
+//                        setVisuals(holder, action, position)
                     }
                 }
             }

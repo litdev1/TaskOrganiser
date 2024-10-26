@@ -67,8 +67,6 @@ data class Action(var text: String,
             initial()
             save(cacheDir, context)
         }
-        initial()
-        save(cacheDir, context)
         ApplicationClass.instance.task = this
     }
 

@@ -106,11 +106,23 @@ class EditActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
+            R.id.home -> {
+                ApplicationClass.instance.data.reset()
+                ApplicationClass.instance.data.setParents(null)
+                val intent = Intent(this, EditActivity::class.java)
+                startActivity(intent);
+            }
+            R.id.editTasks -> {
+                ApplicationClass.instance.data.reset()
+                ApplicationClass.instance.data.setParents(null)
+                val intent = Intent(this, EditActivity::class.java)
+                startActivity(intent);
+            }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent);
