@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="primary">#FFA0C0D0</color>
-    <color name="secondary">#FFD0C0A0</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="primary">#FFF8FF</color>
+    <color name="secondary">#D0C0A0</color>
+    <color name="tasks">#E0C0E0</color>
+    <color name="actions">#D0C0A0</color>
 </resources>

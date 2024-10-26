@@ -4,16 +4,14 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorSecondary">@color/secondary</item>
+        <item name="actionOverflowMenuStyle">@color/primary</item>
     </style>
 
     <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
+        <item name="android:itemBackground">@color/primary</item>
     </style>
 
     <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
         <item name="colorAccent">#FF000000</item>
-    </style>
-
-    <style name="Widget.MyApp.Button" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">?attr/colorSecondary</item>
     </style>
 </resources>

@@ -5,6 +5,7 @@
     android:id="@+id/settings"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/colorPrimary"
     tools:context=".SettingsActivity">
 
     <LinearLayout
@@ -55,7 +56,6 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="User name" />
 
             <EditText
@@ -64,8 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="text"
-                android:text="User" />
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -78,8 +77,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="SMS number" />
+                android:text="Phone (SMS) number" />
 
             <EditText
                 android:id="@+id/editTextPhone"
@@ -95,7 +93,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Use SMS"
-            android:padding="10dp"/>
+            android:textColor="@color/black"
+            android:padding="10dp"
+            android:theme="@style/checkBoxStyle"/>
 
         <TextView
             android:id="@+id/info"

@@ -14,7 +14,7 @@ class ApplicationClass: Application() {
     val version: Int = 1
     var canUseSMS: Boolean = false
     var settings: Settings = Settings(
-        "User",
+        "",
         "",
         true
     )

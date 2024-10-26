@@ -11,7 +11,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.core.graphics.toColor
+import androidx.core.graphics.toColorLong
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.ApplicationClass
@@ -84,11 +87,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
     fun setVisuals(holder: ViewHolder, action: Action, position: Int)
     {
         // set card colour
-        val color = MaterialColors.getColor(
-            holder.itemView.context,
-            if (action.type == ActionType.TASK) com.google.android.material.R.attr.colorPrimary else com.google.android.material.R.attr.colorSecondary,
-            Color.WHITE
-        )
+        val color = ContextCompat.getColor(holder.layoutView.context, if (action.type == ActionType.TASK) R.color.tasks else R.color.actions)
         val colorDark = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
         if (editable) {
             holder.layoutView.setBackgroundColor(color)
@@ -119,6 +118,13 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 ApplicationClass.instance.task = action
                 update()
             }
+            if (action.type == ActionType.ACTION && !editable && action.parent != null) {
+                val parent = action.parent
+                if (parent?.children?.last() == action && parent?.parent != null) {
+                    ApplicationClass.instance.task = parent.parent!!
+                    update()
+                }
+            }
             if (ApplicationClass.instance.canUseSMS &&
                 ApplicationClass.instance.settings.useSMS &&
                 !editable &&
@@ -129,7 +135,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                    Toast.makeText(view.context, message, Toast.LENGTH_LONG).show()
+                    //Toast.makeText(view.context, message, Toast.LENGTH_LONG).show()
                 } catch (e: Exception) {
                     Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
                 }

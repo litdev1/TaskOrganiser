@@ -60,7 +60,13 @@ class MainActivity : AppCompatActivity() {
 
         // Check if the permission is already granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), SEND_SMS_PERMISSION_CODE)
+            if (ApplicationClass.instance.settings.useSMS) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.SEND_SMS),
+                    SEND_SMS_PERMISSION_CODE
+                )
+            }
         } else {
             ApplicationClass.instance.canUseSMS = true
         }
@@ -109,7 +115,7 @@ class MainActivity : AppCompatActivity() {
             R.id.home -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
-                val intent = Intent(this, EditActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent);
             }
             R.id.editTasks -> {

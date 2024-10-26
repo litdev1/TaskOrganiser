@@ -57,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
             R.id.home -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
-                val intent = Intent(this, EditActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent);
             }
             R.id.editTasks -> {

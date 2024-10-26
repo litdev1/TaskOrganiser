@@ -79,13 +79,26 @@ data class Action(var text: String,
         children[0].type = ActionType.TASK
         children[0].children.add(default()); children[0].children[0].text = "Wallet - check cards or cash"
         children[0].children.add(default()); children[0].children[1].text = "Keys"
-        children[0].children.add(default()); children[0].children[2].text = "Bag for shopping"
-        children[0].children.add(default()); children[0].children[3].text = "Shopping list"
-        children[0].children.add(default()); children[0].children[4].text = "Lock door"
+        children[0].children.add(default()); children[0].children[2].text = "Glasses"
+        children[0].children.add(default()); children[0].children[3].text = "Coat/umbrella"
+        children[0].children.add(default()); children[0].children[4].text = "Bag for shopping"
+        children[0].children.add(default()); children[0].children[5].text = "Shopping list"
+        children[0].children.add(default()); children[0].children[6].text = "Lock door"
 
         children.add(default())
-        children[1].text = "SMS test"
-        children[1].sendSMS = true
+        children[1].text = "Shopping List"
+        children[1].type = ActionType.TASK
+        children[1].children.add(default()); children[1].children[0].text = "Milk"
+        children[1].children.add(default()); children[1].children[1].text = "Bread"
+        children[1].children.add(default()); children[1].children[2].text = "Eggs"
+        children[1].children.add(default()); children[1].children[3].text = "Cheese"
+        children[1].children.add(default()); children[1].children[4].text = "Biscuits"
+        children[1].children.add(default()); children[1].children[5].text = "Potatoes"
+        children[1].children.add(default()); children[1].children[6].text = "Onions"
+
+        children.add(default())
+        children[2].text = "SMS test"
+        children[2].sendSMS = true
     }
 
     fun default() : Action {
