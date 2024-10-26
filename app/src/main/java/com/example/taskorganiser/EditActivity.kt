@@ -14,7 +14,10 @@ import com.example.taskorganiser.actions.ActionType
 import com.example.taskorganiser.actions.CustomAdapter
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 
 class EditActivity : AppCompatActivity() {
@@ -31,6 +34,12 @@ class EditActivity : AppCompatActivity() {
             insets
         }
 
+        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
+
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         update()
 
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
@@ -83,7 +92,7 @@ class EditActivity : AppCompatActivity() {
         {
             val holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
             ApplicationClass.instance.task.children[holder.layoutPosition].text = holder.textEditView.text.toString()
-            ApplicationClass.instance.task.children[holder.layoutPosition].sendText = holder.sendTextView.isChecked
+            ApplicationClass.instance.task.children[holder.layoutPosition].sendSMS = holder.sendSMSView.isChecked
             ApplicationClass.instance.task.children[holder.layoutPosition].type = if(holder.taskChipView.isChecked) ActionType.TASK else ActionType.ACTION
         }
         ApplicationClass.instance.data.save(cacheDir.toString(), this)
@@ -112,6 +121,9 @@ class EditActivity : AppCompatActivity() {
 
     fun update()
     {
+        title = ApplicationClass.instance.task.text
+        (findViewById(R.id.toolBarTitle) as TextView).text = title
+
         //val view = findViewById<ConstraintLayout>(R.id.edit)
         //val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         //inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
@@ -124,8 +136,6 @@ class EditActivity : AppCompatActivity() {
         }
 
         // This will pass the ArrayList to our Adapter
-        title = ApplicationClass.instance.task.text
-
         if (recyclerView.adapter == null) {
             adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, true)
 

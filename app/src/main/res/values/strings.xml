@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">TaskOrganiser</string>
+    <string name="info">Welcome to TaskOrganiser (or Tasky).
+        \n\nIt is deigned to be a simple task and activity tool to aid those with limited memory for sequential tasks.
+        \n\nOn this screen you can set your name, a telephone number to send SMS messages and an option to globally allow (or not) SMS message sending,
+        these are all optional.
+        \n\nYou can always return to the main task screen by clicking the app icon on the top left.
+        \n\nThe Home button at the bottom of the screen will also navigate to the Home page of Tasks.
+        \n\nThe Back button at the bottom of the screen will move \'up\' to a parent Task
+        \n\nThe tasks are divided into Actions and groups of Actions called Tasks.
+        \n\nEach Action or Task can be \'ticked off\' with a click once completed, and reverted with a left swipe.
+        \n\nA clicked Task will open a page for its Actions.
+        \n\nThe Tasks and Actions can be created on the Edit screen, where they can be:
+        \n\t► Added (to the end of the current list)
+        \n\t► Deleted (left swipe)
+        \n\t► Re-ordered (drag and drop)
+        \n\t► Set the Task or Action type, text description and optional SMS
+        \n\t► The Undo button will undo all editing in the current Edit session
+        \n\t► The Done button will save and end the editing session, returning to the main Home screen
+    </string>
 </resources>

@@ -1,8 +1,12 @@
 package com.example.taskorganiser
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +30,16 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
 
+        (findViewById(R.id.info) as TextView).movementMethod = ScrollingMovementMethod()
+
+        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
+
+        setSupportActionBar(findViewById(R.id.my_toolbar))
+        (findViewById(R.id.toolBarTitle) as TextView).text = title
+
         findViewById<EditText>(R.id.editTextUser).setText(ApplicationClass.instance.settings.user)
         findViewById<EditText>(R.id.editTextPhone).setText(ApplicationClass.instance.settings.phone)
         findViewById<CheckBox>(R.id.checkBoxUseSMS).isChecked = ApplicationClass.instance.settings.useSMS
@@ -46,7 +60,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         catch (e: Exception)
         {
-            Toast.makeText(this, "Saving settings data failed", 2000).show()
+            Toast.makeText(this, "Saving settings data failed", Toast.LENGTH_LONG).show()
         }
     }
 }

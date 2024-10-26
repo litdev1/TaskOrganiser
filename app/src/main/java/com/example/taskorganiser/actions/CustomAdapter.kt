@@ -36,7 +36,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         val holder = ViewHolder(view)
         holder.textView.visibility = if(editable) View.GONE else View.VISIBLE
         holder.textEditView.visibility = if(editable) View.VISIBLE else View.GONE
-        holder.sendTextView.visibility = if(editable) View.VISIBLE else View.GONE
+        holder.sendSMSView.visibility = if(editable) View.VISIBLE else View.GONE
         holder.chipGroupView.visibility = if(editable) View.VISIBLE else View.GONE
         return holder
     }
@@ -77,7 +77,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         holder.textEditView.setText(action.text)
 
         // sets checkboxes
-        holder.sendTextView.isChecked = action.sendText
+        holder.sendSMSView.isChecked = action.sendSMS
         holder.chipGroupView.check(if (action.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
     }
 
@@ -118,15 +118,19 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 ApplicationClass.instance.task = action
                 update()
             }
-            if (ApplicationClass.instance.settings.useSMS && !editable && oldState == StateType.NONE && action.sendText) {
+            if (ApplicationClass.instance.canUseSMS &&
+                ApplicationClass.instance.settings.useSMS &&
+                !editable &&
+                oldState == StateType.NONE && action.sendSMS) {
                 val phoneNumber = ApplicationClass.instance.settings.phone
-                val message = ApplicationClass.instance.settings.user + " completed action : " + action.text
+                val message = ApplicationClass.instance.settings.user + " completed " +
+                        if(action.type == ActionType.TASK) "task" else "action" + " : " + action.text
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                    Toast.makeText(view.context, message, 2000).show()
+                    Toast.makeText(view.context, message, Toast.LENGTH_LONG).show()
                 } catch (e: Exception) {
-                    Toast.makeText(view.context, "SMS failed", 2000).show()
+                    Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -147,11 +151,11 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     val a = 1;
                 }
             }
-            holder.sendTextView.setOnClickListener { view ->
+            holder.sendSMSView.setOnClickListener { view ->
                 val position = holder.layoutPosition
                 val action = mList[position]
                 val checkBox = view as CheckBox
-                action.sendText = checkBox.isChecked
+                action.sendSMS = checkBox.isChecked
             }
             holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
                 val position = holder.layoutPosition
@@ -180,7 +184,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         val textView: TextView = itemView.findViewById(R.id.textView)
         val textEditView: EditText = itemView.findViewById(R.id.textEditView)
         val layoutView: LinearLayout = itemView.findViewById(R.id.layoutView)
-        val sendTextView: CheckBox = itemView.findViewById(R.id.checkBoxText)
+        val sendSMSView: CheckBox = itemView.findViewById(R.id.checkBoxSMS)
         val chipGroupView: ChipGroup = itemView.findViewById(R.id.chipGroupAction)
         val taskChipView: Chip = itemView.findViewById(R.id.chipTask)
         val actionChipView: Chip = itemView.findViewById(R.id.chipAction)
@@ -234,7 +238,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
                         if (editable) {
                             // below line is to display our snackbar with action.
-                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, 2000)
+                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, Snackbar.LENGTH_LONG)
                             /*
                             val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
                             layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout

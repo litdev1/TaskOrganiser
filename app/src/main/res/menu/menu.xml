@@ -5,7 +5,7 @@
         android:id="@+id/overflowMenu"
         android:icon="@drawable/ic_menu_24dp"
         android:title=""
-        app:showAsAction="always">
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/settings"

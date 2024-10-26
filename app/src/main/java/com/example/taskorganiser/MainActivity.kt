@@ -1,21 +1,33 @@
 package com.example.taskorganiser
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.WindowManager
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskorganiser.actions.CustomAdapter
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private val SEND_SMS_PERMISSION_CODE = 100
     var itemTouchHelper: ItemTouchHelper? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +40,32 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        if (ApplicationClass.instance.firstTime)
+        {
+            ApplicationClass.instance.firstTime = false
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent);
+        }
+
+        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+            ApplicationClass.instance.data.reset()
+            ApplicationClass.instance.data.setParents(null)
+            ApplicationClass.instance.task = ApplicationClass.instance.data
+            update()
+            if (ApplicationClass.instance.task.children.size > 0) {
+                val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
+                recyclerView.scrollToPosition(0)
+            }
+        }
+
+        // Check if the permission is already granted
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.SEND_SMS), SEND_SMS_PERMISSION_CODE)
+        } else {
+            ApplicationClass.instance.canUseSMS = true
+        }
+
+        setSupportActionBar(findViewById(R.id.my_toolbar))
         update()
 
         findViewById<Button>(R.id.buttonMainHome).setOnClickListener { view ->
@@ -49,9 +87,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Handle the permission request result
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == SEND_SMS_PERMISSION_CODE) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                ApplicationClass.instance.canUseSMS = true
+            } else {
+                Toast.makeText(this, "App will be unable to send SMS texts", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -82,6 +132,8 @@ class MainActivity : AppCompatActivity() {
 
     fun update()
     {
+        title = ApplicationClass.instance.task.text
+        (findViewById(R.id.toolBarTitle) as TextView).text = title
         val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
 
         // this creates a vertical layout Manager
@@ -90,7 +142,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // This will pass the ArrayList to our Adapter
-        title = ApplicationClass.instance.task.text
         val adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, false)
 
         // Setting the Adapter with the recyclerview

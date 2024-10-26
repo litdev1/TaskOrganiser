@@ -18,7 +18,7 @@ import java.io.InputStreamReader
 data class Action(var text: String,
                   var type: ActionType,
                   var state: StateType,
-                  var sendText: Boolean,
+                  var sendSMS: Boolean,
                   var parent: Action?,
                   val children: ArrayList<Action>)
 {
@@ -38,7 +38,7 @@ data class Action(var text: String,
                 bos.write(json.toByteArray())
             }
         } catch (e: Exception) {
-            Toast.makeText(context, "Saving action data failed", 2000).show()
+            Toast.makeText(context, "Saving action data failed", Toast.LENGTH_LONG).show()
         }
         setParents(null)
     }
@@ -63,28 +63,31 @@ data class Action(var text: String,
             reset()
             setParents(null)
         } catch (e: Exception) {
-            Toast.makeText(context, "Loading action data failed", 2000).show()
+            //Toast.makeText(context, "Loading action data failed", Toast.LENGTH_LONG).show()
             initial()
             save(cacheDir, context)
         }
+        initial()
+        save(cacheDir, context)
         ApplicationClass.instance.task = this
     }
 
     fun initial()
     {
         children.clear()
-        for (i in 1..10) {
-            children.add(Action(
-                "Action $i\nMore data",
-                ActionType.ACTION,
-                StateType.NONE,
-                false,
-                null,
-                ArrayList<Action>()))
-        }
-        children[0].text = "Task"
+
+        children.add(default())
+        children[0].text = "Shopping"
         children[0].type = ActionType.TASK
-        children[0].children.add(default())
+        children[0].children.add(default()); children[0].children[0].text = "Wallet - check cards or cash"
+        children[0].children.add(default()); children[0].children[1].text = "Keys"
+        children[0].children.add(default()); children[0].children[2].text = "Bag for shopping"
+        children[0].children.add(default()); children[0].children[3].text = "Shopping list"
+        children[0].children.add(default()); children[0].children[4].text = "Lock door"
+
+        children.add(default())
+        children[1].text = "SMS test"
+        children[1].sendSMS = true
     }
 
     fun default() : Action {
