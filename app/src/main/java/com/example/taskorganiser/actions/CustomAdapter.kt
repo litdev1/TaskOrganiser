@@ -22,9 +22,8 @@ import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
-class CustomAdapter(val mList: ArrayList<Action>,
+class CustomAdapter(var mList: ArrayList<Action>,
                     val update: () -> (Unit),
-                    val recyclerView: RecyclerView,
                     val editable: Boolean) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     // create new views
@@ -45,99 +44,129 @@ class CustomAdapter(val mList: ArrayList<Action>,
     // binds the list items to a view
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         try {
-            val actionViewModel = mList[position]
+            val action = mList[position]
 
-            // sets the image to the imageview from our itemHolder class
-            if (editable || actionViewModel.state == StateType.NONE) {
-                val image = if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
-                holder.imageView.setImageResource(image)
-            } else {
-                val image = if (actionViewModel.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
-                holder.imageView.setImageResource(image)
+            setControls(holder, action, position)
+            setVisuals(holder, action, position)
+            setEvents(holder)
+        }
+        catch (e: Exception)
+        {
+            val a = 1
+        }
+    }
+
+    fun updateList(mList: ArrayList<Action>)
+    {
+        this.mList = mList
+    }
+
+    fun setControls(holder: ViewHolder, action: Action, position: Int)
+    {
+        // sets the image to the imageview from our itemHolder class
+        if (editable || action.state == StateType.NONE) {
+            val image = if (action.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
+            holder.imageView.setImageResource(image)
+        } else {
+            val image = if (action.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
+            holder.imageView.setImageResource(image)
+        }
+
+        // sets the text to the textview from our itemHolder class
+        holder.textView.text = action.text
+        holder.textEditView.setText(action.text)
+
+        // sets checkboxes
+        holder.sendTextView.isChecked = action.sendText
+        holder.chipGroupView.check(if (action.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
+    }
+
+    fun setVisuals(holder: ViewHolder, action: Action, position: Int)
+    {
+        // set card colour
+        val color = MaterialColors.getColor(
+            holder.itemView.context,
+            if (action.type == ActionType.TASK) com.google.android.material.R.attr.colorPrimary else com.google.android.material.R.attr.colorSecondary,
+            Color.WHITE
+        )
+        val colorDark = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
+        if (editable) {
+            holder.layoutView.setBackgroundColor(color)
+        } else {
+            when (action.state) {
+                StateType.NONE -> holder.layoutView.setBackgroundColor(color)
+                StateType.DONE -> holder.layoutView.setBackgroundColor(colorDark)
+                StateType.YES -> holder.layoutView.setBackgroundColor(colorDark)
+                StateType.NO -> holder.layoutView.setBackgroundColor(colorDark)
             }
+        }
+    }
 
-            // sets the text to the textview from our itemHolder class
-            holder.textView.text = actionViewModel.text
-            holder.textEditView.setText(actionViewModel.text)
-            holder.sendTextView.isChecked = actionViewModel.sendText
-            holder.chipGroupView.check(if (actionViewModel.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
-
-            val color = MaterialColors.getColor(
-                holder.itemView.context,
-                if (actionViewModel.type == ActionType.TASK) com.google.android.material.R.attr.colorPrimary else com.google.android.material.R.attr.colorSecondary,
-                Color.WHITE
-            )
-            val colorDark = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
-            if (editable) {
-                holder.layoutView.setBackgroundColor(color)
-            } else {
-                when (actionViewModel.state) {
-                    StateType.NONE -> holder.layoutView.setBackgroundColor(color)
-                    StateType.DONE -> holder.layoutView.setBackgroundColor(colorDark)
-                    StateType.YES -> holder.layoutView.setBackgroundColor(colorDark)
-                    StateType.NO -> holder.layoutView.setBackgroundColor(colorDark)
+    fun setEvents(holder: ViewHolder)
+    {
+        //Click events
+        holder.itemView.setOnClickListener { view ->
+            val position = holder.layoutPosition
+            val action = mList[position]
+            val oldState = action.state
+            action.state = StateType.DONE
+            if (!editable && oldState != action.state) {
+                setControls(holder, action, position)
+                setVisuals(holder, action, position)
+            }
+            if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
+                ApplicationClass.instance.task = action
+                update()
+            }
+            if (ApplicationClass.instance.settings.useSMS && !editable && oldState == StateType.NONE && action.sendText) {
+                val phoneNumber = ApplicationClass.instance.settings.phone
+                val message = ApplicationClass.instance.settings.user + " completed action : " + action.text
+                try {
+                    val smsManager = view.context.getSystemService(SmsManager::class.java)
+                    smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                    Toast.makeText(view.context, message, 2000).show()
+                } catch (e: Exception) {
+                    Toast.makeText(view.context, "SMS failed", 2000).show()
                 }
             }
+        }
 
-            //Click
-            holder.itemView.setOnClickListener { view ->
-                val position = holder.layoutPosition
-                val action = mList[position]
-                val oldState = action.state
-                action.state = StateType.DONE
-                notifyItemChanged(position)
-                if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
-                    ApplicationClass.instance.task = action
-                    update()
-                }
-                if (ApplicationClass.instance.settings.useSMS && !editable && oldState == StateType.NONE && action.sendText) {
-                    val phoneNumber = ApplicationClass.instance.settings.phone
-                    val message = ApplicationClass.instance.settings.user + " completed action : " + action.text
-                    try {
-                        val smsManager = view.context.getSystemService(SmsManager::class.java)
-                        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                        Toast.makeText(view.context, message, 2000).show()
-                    } catch (e: Exception) {
-                        Toast.makeText(view.context, "SMS failed", 2000).show()
-                    }
-                }
-            }
-
-            //Edit
-            if (editable) {
-                holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
+        //Edit events
+        if (editable) {
+            holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
+                try {
                     val position = holder.layoutPosition
                     val action = mList[position]
                     if (!hasFocus) {
                         val editText = view as EditText
                         action.text = editText.text.toString()
-                        notifyItemChanged(position)
                     }
                 }
-                holder.sendTextView.setOnClickListener { view ->
-                    val position = holder.layoutPosition
-                    val action = mList[position]
-                    val checkBox = view as CheckBox
-                    action.sendText = checkBox.isChecked
-                    notifyItemChanged(position)
-                }
-                holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
-                    val position = holder.layoutPosition
-                    val action = mList[position]
-                    if (checkedIds.size > 0) {
-                        var newType =
-                            if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
-                        if (action.type != newType) {
-                            action.type = newType
-                            notifyItemChanged(position)
-                        }
-                    }
+                catch (e: Exception)
+                {
+                    val a = 1;
                 }
             }
-        }
-        catch (e: Exception)
-        {
-            val a = 1
+            holder.sendTextView.setOnClickListener { view ->
+                val position = holder.layoutPosition
+                val action = mList[position]
+                val checkBox = view as CheckBox
+                action.sendText = checkBox.isChecked
+            }
+            holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
+                val position = holder.layoutPosition
+                val action = mList[position]
+                if (checkedIds.size > 0) {
+                    var newType =
+                        if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
+                    if (action.type != newType) {
+                        action.type = newType
+                        setControls(holder, action, position)
+                        setVisuals(holder, action, position)
+                    }
+                }
+                notifyItemChanged(position)
+            }
         }
     }
 
@@ -158,7 +187,7 @@ class CustomAdapter(val mList: ArrayList<Action>,
         val actionChipView: Chip = itemView.findViewById(R.id.chipAction)
     }
 
-    fun setTouchHelper(adapter: CustomAdapter, recyclerview: RecyclerView, editable: Boolean) : ItemTouchHelper {
+    fun setTouchHelper(adapter: CustomAdapter, editable: Boolean) : ItemTouchHelper {
         // on below line we are creating a method to create item touch helper
         // method for adding swipe to delete functionality.
         // in this we are specifying drag direction and position

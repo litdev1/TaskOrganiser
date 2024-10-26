@@ -19,6 +19,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 
 class EditActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null
+    lateinit var adapter: CustomAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +40,9 @@ class EditActivity : AppCompatActivity() {
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
+            if (ApplicationClass.instance.task.children.size > 0) {
+                recyclerView.scrollToPosition(0)
+            }
         }
 
         findViewById<Button>(R.id.buttonEditBack).setOnClickListener { view ->
@@ -56,13 +60,18 @@ class EditActivity : AppCompatActivity() {
             recyclerView.scrollToPosition(ApplicationClass.instance.task.children.size-1)
         }
 
-        findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonUndoEdit).setOnClickListener { view ->
             ApplicationClass.instance.data.load(cacheDir.toString(), this)
             update()
             /*
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
             */
+        }
+
+        findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
         }
     }
 
@@ -116,17 +125,24 @@ class EditActivity : AppCompatActivity() {
 
         // This will pass the ArrayList to our Adapter
         title = ApplicationClass.instance.task.text
-        val adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, recyclerView, true)
 
-        // Setting the Adapter with the recyclerview
-        recyclerView.adapter = adapter
+        if (recyclerView.adapter == null) {
+            adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, true)
+
+            // Setting the Adapter with the recyclerview
+            recyclerView.adapter = adapter
+        }
+        else
+        {
+            adapter.updateList(ApplicationClass.instance.task.children)
+        }
 
         if (itemTouchHelper != null) {
             itemTouchHelper?.attachToRecyclerView(null)
             itemTouchHelper = null
         }
 
-        itemTouchHelper = adapter.setTouchHelper(adapter, recyclerView, adapter.editable)
+        itemTouchHelper = adapter.setTouchHelper(adapter, adapter.editable)
         itemTouchHelper?.attachToRecyclerView(recyclerView)
 
         // that data has been updated.

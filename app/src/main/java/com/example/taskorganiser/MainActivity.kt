@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
+            if (ApplicationClass.instance.task.children.size > 0) {
+                val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
+                recyclerView.scrollToPosition(0)
+            }
         }
 
         findViewById<Button>(R.id.buttonMainBack).setOnClickListener { view ->
@@ -87,7 +91,7 @@ class MainActivity : AppCompatActivity() {
 
         // This will pass the ArrayList to our Adapter
         title = ApplicationClass.instance.task.text
-        val adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, recyclerView, false)
+        val adapter = CustomAdapter(ApplicationClass.instance.task.children, ::update, false)
 
         // Setting the Adapter with the recyclerview
         recyclerView.adapter = adapter
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             itemTouchHelper?.attachToRecyclerView(null)
             itemTouchHelper = null
         }
-        itemTouchHelper = adapter.setTouchHelper(adapter, recyclerView, adapter.editable)
+        itemTouchHelper = adapter.setTouchHelper(adapter, adapter.editable)
         itemTouchHelper?.attachToRecyclerView(recyclerView)
 
         // that data has been updated.
