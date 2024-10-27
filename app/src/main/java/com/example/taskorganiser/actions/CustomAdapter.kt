@@ -301,7 +301,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     } else {
                         /*
                         actionItem.state = StateType.YES
-                        actionItem.image = R.drawable.ic_dashboard_black_24dp
+                        actionItem.image = R.drawable.ic_dashboard_24dp
                         adapter.notifyItemChanged(position)
                         */
                     }

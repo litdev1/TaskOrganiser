@@ -93,7 +93,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Use SMS"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:padding="10dp"
             android:theme="@style/checkBoxStyle"/>
 

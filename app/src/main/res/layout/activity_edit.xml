@@ -70,7 +70,7 @@
                     android:id="@+id/buttonEditHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_home_black_24dp"
+                    android:drawableLeft="@drawable/ic_home_24dp"
                     android:gravity="left|center_vertical"
                     android:text="Home"
                     android:textColor="?android:attr/textColorPrimary"
