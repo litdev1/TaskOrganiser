@@ -1,4 +1,4 @@
-package com.example.taskorganiser
+package com.litdev.taskorganiser
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,15 +10,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskorganiser.actions.ActionType
-import com.example.taskorganiser.actions.CustomAdapter
+import com.litdev.taskorganiser.actions.ActionType
+import com.litdev.taskorganiser.actions.CustomAdapter
 import android.view.Menu
 import android.view.MenuItem
-import android.view.WindowManager
-import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 
 class EditActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null

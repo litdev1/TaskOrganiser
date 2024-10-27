@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.taskorganiser"
+    namespace = "com.litdev.taskorganiser"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.taskorganiser"
+        applicationId = "com.litdev.taskorganiser"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

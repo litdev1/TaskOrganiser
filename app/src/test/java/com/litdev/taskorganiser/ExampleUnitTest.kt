@@ -1,4 +1,4 @@
-package com.example.taskorganiser
+package com.litdev.taskorganiser
 
 import org.junit.Test
 

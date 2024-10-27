@@ -1,12 +1,10 @@
-package com.example.taskorganiser
+package com.litdev.taskorganiser
 
 import android.app.Application
-import android.content.Intent
-import android.content.pm.PackageManager
-import com.example.taskorganiser.actions.Action
-import com.example.taskorganiser.actions.ActionType
-import com.example.taskorganiser.actions.Settings
-import com.example.taskorganiser.actions.StateType
+import com.litdev.taskorganiser.actions.Action
+import com.litdev.taskorganiser.actions.ActionType
+import com.litdev.taskorganiser.actions.Settings
+import com.litdev.taskorganiser.actions.StateType
 import java.io.File
 
 class ApplicationClass: Application() {
@@ -28,7 +26,7 @@ class ApplicationClass: Application() {
     var task: Action = data
 
     companion object {
-        lateinit var instance: com.example.taskorganiser.ApplicationClass
+        lateinit var instance: com.litdev.taskorganiser.ApplicationClass
             private set
     }
 

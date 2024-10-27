@@ -1,4 +1,4 @@
-package com.example.taskorganiser.actions
+package com.litdev.taskorganiser.actions
 
 import android.content.res.Configuration
 import android.graphics.Color
@@ -12,18 +12,14 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
-import androidx.core.graphics.toColor
-import androidx.core.graphics.toColorLong
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.taskorganiser.ApplicationClass
-import com.example.taskorganiser.R
+import com.litdev.taskorganiser.ApplicationClass
+import com.litdev.taskorganiser.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.color.MaterialColors
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
