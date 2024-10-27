@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipCornerRadius="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:text="Task" />
 
                 <com.google.android.material.chip.Chip
@@ -83,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:chipCornerRadius="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="?android:attr/textColorPrimary"
                     android:text="Action" />
 
             </com.google.android.material.chip.ChipGroup>
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
                 android:text="Send SMS"
-                android:textColor="@color/black"
+                android:textColor="?android:attr/textColorPrimary"
                 android:theme="@style/checkBoxStyle"/>
 
         </LinearLayout>

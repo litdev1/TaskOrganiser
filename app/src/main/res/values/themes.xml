@@ -2,16 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TaskOrganiser" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="actionOverflowMenuStyle">@color/primary</item>
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorSecondary">@color/secondaryLight</item>
+        <item name="actionOverflowMenuStyle">@color/primaryLight</item>
     </style>
 
     <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
-        <item name="android:itemBackground">@color/primary</item>
+        <item name="android:itemBackground">@color/primaryLight</item>
     </style>
 
-    <style name="checkBoxStyle" parent="Base.Theme.AppCompat">
-        <item name="colorAccent">#FF000000</item>
+    <style name="checkBoxStyle" parent="Theme.TaskOrganiser">
+        <item name="colorPrimary">@color/primaryDark</item>
+        <item name="colorAccent">@color/primaryDark</item>
     </style>
 </resources>

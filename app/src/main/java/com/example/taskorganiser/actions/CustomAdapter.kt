@@ -1,5 +1,6 @@
 package com.example.taskorganiser.actions
 
+import android.content.res.Configuration
 import android.graphics.Color
 import android.telephony.SmsManager
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.toColor
@@ -66,13 +68,23 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
     fun setControls(holder: ViewHolder, action: Action, position: Int)
     {
+        val currentNightMode = holder.layoutView.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
         // sets the image to the imageview from our itemHolder class
         if (editable || action.state == StateType.NONE) {
             val image = if (action.type == ActionType.TASK) R.drawable.ic_task_24dp else R.drawable.ic_action_24dp
             holder.imageView.setImageResource(image)
         } else {
-            val image = if (action.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
-            holder.imageView.setImageResource(image)
+            when (currentNightMode) {
+                Configuration.UI_MODE_NIGHT_NO -> {
+                    val image = if (action.type == ActionType.TASK) R.drawable.ic_task_done_24dp else R.drawable.ic_action_done_24dp
+                    holder.imageView.setImageResource(image)
+                }
+                Configuration.UI_MODE_NIGHT_YES -> {
+                    val image = if (action.type == ActionType.TASK) R.drawable.ic_task_done_dark_24dp else R.drawable.ic_action_done_dark_24dp
+                    holder.imageView.setImageResource(image)
+                }
+            }
         }
 
         // sets the text to the textview from our itemHolder class
@@ -86,17 +98,31 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
     fun setVisuals(holder: ViewHolder, action: Action, position: Int)
     {
+        val currentNightMode = holder.layoutView.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+
         // set card colour
-        val color = ContextCompat.getColor(holder.layoutView.context, if (action.type == ActionType.TASK) R.color.tasks else R.color.actions)
-        val colorDark = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
+        var color = 0
+        var colorSelected = 0
+        when (currentNightMode) {
+            Configuration.UI_MODE_NIGHT_NO -> {
+                color = ContextCompat.getColor(holder.layoutView.context,
+                    if (action.type == ActionType.TASK) R.color.tasksLight else R.color.actionsLight)
+                colorSelected = ColorUtils.blendARGB(color, Color.BLACK, 0.2f)
+            } // Night mode is not active, we're using the light theme
+            Configuration.UI_MODE_NIGHT_YES -> {
+                color = ContextCompat.getColor(holder.layoutView.context,
+                    if (action.type == ActionType.TASK) R.color.tasksDark else R.color.actionsDark)
+                colorSelected = ColorUtils.blendARGB(color, Color.WHITE, 0.2f)
+            } // Night mode is active, we're using dark theme
+        }
         if (editable) {
             holder.layoutView.setBackgroundColor(color)
         } else {
             when (action.state) {
                 StateType.NONE -> holder.layoutView.setBackgroundColor(color)
-                StateType.DONE -> holder.layoutView.setBackgroundColor(colorDark)
-                StateType.YES -> holder.layoutView.setBackgroundColor(colorDark)
-                StateType.NO -> holder.layoutView.setBackgroundColor(colorDark)
+                StateType.DONE -> holder.layoutView.setBackgroundColor(colorSelected)
+                StateType.YES -> holder.layoutView.setBackgroundColor(colorSelected)
+                StateType.NO -> holder.layoutView.setBackgroundColor(colorSelected)
             }
         }
     }

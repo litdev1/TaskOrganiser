@@ -2,8 +2,17 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="primary">#FFF8FF</color>
-    <color name="secondary">#D0C0A0</color>
-    <color name="tasks">#E0C0E0</color>
-    <color name="actions">#D0C0A0</color>
+
+    <!-- Light theme. -->
+    <color name="primaryLight">#FFF9F0</color>
+    <color name="secondaryLight">#D0C0A0</color>
+    <color name="tasksLight">#D5C0E0</color>
+    <color name="actionsLight">#D0C0A0</color>
+
+    <!-- Dark theme. -->
+    <color name="primaryDark">#3F3930</color>
+    <color name="secondaryDark">#403010</color>
+    <color name="tasksDark">#453050</color>
+    <color name="actionsDark">#403010</color>
+
 </resources>

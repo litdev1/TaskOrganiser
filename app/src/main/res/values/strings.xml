@@ -13,11 +13,11 @@
         \n\nEach Action or Task can be \'ticked off\' with a click once completed, and reverted with a left swipe.
         \n\nA clicked Task will open a page for its Actions, and once the last Action is completed control will return to the parent Task.
         \n\nThe Tasks and Actions can be created on the Edit screen, where they can be:
-        \n\t► Added (to the end of the current list, where a floating keyboard helps
+        \n\t► Top Add button to add to the end of the current list, where a floating keyboard helps
         \n\t► Deleted (left swipe)
         \n\t► Re-ordered (drag and drop)
         \n\t► Set the Task or Action type, text description and optional SMS
-        \n\t► The Undo button will undo all editing in the current Edit session
-        \n\t► The Done button will save and end the editing session, returning to the main Tasks Home screen
+        \n\t► The top Undo button will undo all editing in the current Edit session
+        \n\t► The top Done button will save and end the editing session, returning to the main Tasks Home screen
     </string>
 </resources>

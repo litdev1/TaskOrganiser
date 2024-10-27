@@ -1,7 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.TaskOrganiser" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.TaskOrganiser" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="colorPrimary">@color/primaryDark</item>
+        <item name="colorSecondary">@color/secondaryDark</item>
+        <item name="actionOverflowMenuStyle">@color/primaryDark</item>
+    </style>
+
+    <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
+        <item name="android:itemBackground">@color/primaryDark</item>
+    </style>
+
+    <style name="checkBoxStyle" parent="Theme.TaskOrganiser">
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorAccent">@color/primaryLight</item>
     </style>
 </resources>
