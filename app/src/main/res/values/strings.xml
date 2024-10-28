@@ -20,4 +20,6 @@
         \n\t► The top Undo button will undo all editing in the current Edit session
         \n\t► The top Done button will save and end the editing session, returning to the main Tasks Home screen
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

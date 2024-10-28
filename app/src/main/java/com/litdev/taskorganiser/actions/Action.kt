@@ -22,7 +22,7 @@ data class Action(var text: String,
                   var parent: Action?,
                   val children: ArrayList<Action>)
 {
-    fun save(cacheDir: String, context: Context)
+    fun save(cacheDir: String, context: Context?)
     {
         reset()
         try {
@@ -67,6 +67,8 @@ data class Action(var text: String,
             initial()
             save(cacheDir, context)
         }
+//        initial()
+//        save(cacheDir, context)
         ApplicationClass.instance.task = this
     }
 

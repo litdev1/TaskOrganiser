@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Check if the permission is already granted
+        // Check if the permission is already granted for SMS
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
             if (ApplicationClass.instance.settings.useSMS) {
                 ActivityCompat.requestPermissions(

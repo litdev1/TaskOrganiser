@@ -24,7 +24,7 @@
             <item
                 android:id="@+id/extra"
                 android:icon="@drawable/ic_extension_24dp"
-                android:title="Extra"
+                android:title="Extras"
                 app:showAsAction="never" />
         </menu>
     </item>
