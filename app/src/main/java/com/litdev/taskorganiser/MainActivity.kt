@@ -52,6 +52,16 @@ class MainActivity : AppCompatActivity() {
                 recyclerView.scrollToPosition(0)
             }
         }
+        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+            ApplicationClass.instance.data.reset()
+            ApplicationClass.instance.data.setParents(null)
+            ApplicationClass.instance.task = ApplicationClass.instance.data
+            update()
+            if (ApplicationClass.instance.task.children.size > 0) {
+                val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
+                recyclerView.scrollToPosition(0)
+            }
+        }
 
         // Check if the permission is already granted
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -119,6 +129,10 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent);
+            }
+            R.id.extra -> {
+                val intent = Intent(this, ExtraActivity::class.java)
                 startActivity(intent);
             }
         }

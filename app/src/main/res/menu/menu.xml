@@ -21,6 +21,11 @@
                 android:icon="@drawable/ic_settings_24dp"
                 android:title="Settings"
                 app:showAsAction="never" />
+            <item
+                android:id="@+id/extra"
+                android:icon="@drawable/ic_extension_24dp"
+                android:title="Extra"
+                app:showAsAction="never" />
         </menu>
     </item>
 </menu>

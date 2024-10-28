@@ -35,6 +35,10 @@ class EditActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent);
         }
+        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent);
+        }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
         update()
@@ -120,6 +124,10 @@ class EditActivity : AppCompatActivity() {
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent);
+            }
+            R.id.extra -> {
+                val intent = Intent(this, ExtraActivity::class.java)
                 startActivity(intent);
             }
         }
