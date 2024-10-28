@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.Environment
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -16,10 +15,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import java.io.File
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
 
 class ExtraActivity : AppCompatActivity() {
     private val FILE_PERMISSION_CODE = 1001
@@ -36,11 +31,11 @@ class ExtraActivity : AppCompatActivity() {
 
         (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
         (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -54,8 +49,8 @@ class ExtraActivity : AppCompatActivity() {
         }
 
         // Check if the permission is already granted for SMS
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+            ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -78,21 +73,21 @@ class ExtraActivity : AppCompatActivity() {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.editTasks -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, EditActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.extra -> {
                 val intent = Intent(this, ExtraActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

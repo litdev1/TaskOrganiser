@@ -23,7 +23,7 @@ import com.litdev.taskorganiser.actions.CustomAdapter
 
 class MainActivity : AppCompatActivity() {
     private val SEND_SMS_PERMISSION_CODE = 100
-    var itemTouchHelper: ItemTouchHelper? = null;
+    var itemTouchHelper: ItemTouchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         {
             ApplicationClass.instance.firstTime = false
             val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
@@ -119,21 +119,21 @@ class MainActivity : AppCompatActivity() {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.editTasks -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, EditActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.extra -> {
                 val intent = Intent(this, ExtraActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

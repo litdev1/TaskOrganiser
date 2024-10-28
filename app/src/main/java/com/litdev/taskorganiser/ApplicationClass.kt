@@ -27,7 +27,7 @@ class ApplicationClass: Application() {
     var task: Action = data
 
     companion object {
-        lateinit var instance: com.litdev.taskorganiser.ApplicationClass
+        lateinit var instance: ApplicationClass
             private set
     }
 

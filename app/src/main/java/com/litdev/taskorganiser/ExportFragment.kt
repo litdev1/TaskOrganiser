@@ -3,7 +3,6 @@ package com.litdev.taskorganiser
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -16,14 +15,8 @@ import androidx.activity.result.contract.ActivityResultContracts.StartActivityFo
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import android.provider.OpenableColumns
-import androidx.annotation.RequiresApi
 import com.litdev.taskorganiser.actions.Action
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ExportFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ExportFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +41,7 @@ class ExportFragment : Fragment() {
                         val nameIndex = cursor?.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                         cursor?.moveToFirst()
                         val fileName = cursor?.getString(nameIndex?: 0)
+                        cursor?.close()
 
                         when (mode)
                         {

@@ -25,7 +25,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
+                android:gravity="start|center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -40,13 +40,13 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="18dp"/>
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
         </androidx.appcompat.widget.Toolbar>
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragment_container"
             android:name="com.litdev.taskorganiser.ExportFragment"
             android:layout_width="match_parent"

@@ -138,7 +138,7 @@ data class Action(var text: String,
         }
         for (item in children)
         {
-            item.reset();
+            item.reset()
         }
     }
 
@@ -147,7 +147,7 @@ data class Action(var text: String,
         this.parent = parent
         for (item in children)
         {
-            item.setParents(this);
+            item.setParents(this)
         }
     }
 }
