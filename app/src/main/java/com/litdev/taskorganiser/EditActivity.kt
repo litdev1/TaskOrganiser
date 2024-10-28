@@ -151,6 +151,11 @@ class EditActivity : AppCompatActivity() {
         }
         else
         {
+            for (i in 0..recyclerView.childCount - 1) {
+                val holder =
+                    recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
+                adapter.hideKeyboard(holder.textEditView)
+            }
             adapter.updateList(ApplicationClass.instance.task.children)
         }
 

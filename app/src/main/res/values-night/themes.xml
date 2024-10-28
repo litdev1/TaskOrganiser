@@ -4,7 +4,7 @@
         <!-- Customize your dark theme here. -->
         <item name="colorPrimary">@color/primaryDark</item>
         <item name="colorSecondary">@color/secondaryDark</item>
-        <item name="actionOverflowMenuStyle">@color/primaryDark</item>
+        <item name="actionOverflowMenuStyle">@color/secondaryDark</item>
     </style>
 
     <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">

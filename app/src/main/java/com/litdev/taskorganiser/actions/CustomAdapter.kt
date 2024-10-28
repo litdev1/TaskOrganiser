@@ -1,11 +1,13 @@
 package com.litdev.taskorganiser.actions
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.res.Configuration
 import android.graphics.Color
 import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
@@ -214,6 +216,11 @@ class CustomAdapter(var mList: ArrayList<Action>,
     // return the number of the items in the list
     override fun getItemCount(): Int {
         return mList.size
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
     }
 
     // Holds the views for adding it to image and text

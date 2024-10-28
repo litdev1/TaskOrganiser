@@ -4,7 +4,7 @@
         <!-- Customize your light theme here. -->
         <item name="colorPrimary">@color/primaryLight</item>
         <item name="colorSecondary">@color/secondaryLight</item>
-        <item name="actionOverflowMenuStyle">@color/primaryLight</item>
+        <item name="actionOverflowMenuStyle">@color/secondaryLight</item>
     </style>
 
     <style name="Theme.TaskOrganiser" parent="Base.Theme.TaskOrganiser">
