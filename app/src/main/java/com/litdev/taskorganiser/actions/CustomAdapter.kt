@@ -27,6 +27,8 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     val update: () -> (Unit),
                     val editable: Boolean) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
+    var updateCall: Boolean = false
+
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // inflates the card_view_design view
@@ -60,6 +62,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
     fun updateList(mList: ArrayList<Action>)
     {
         this.mList = mList
+        updateCall = true
     }
 
     fun setControls(holder: ViewHolder, action: Action, position: Int)
@@ -170,10 +173,15 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 try {
                     val position = holder.layoutPosition
                     val action = mList[position]
-                    if (!hasFocus) {
+                    if (!updateCall && !hasFocus) {
                         val editText = view as EditText
                         action.text = editText.text.toString()
                     }
+                    else
+                    {
+                        val a = "lostFocus"
+                    }
+                    updateCall = false
                 }
                 catch (e: Exception)
                 {
