@@ -14,6 +14,8 @@ import com.litdev.taskorganiser.actions.ActionType
 import com.litdev.taskorganiser.actions.CustomAdapter
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
 
@@ -162,7 +164,7 @@ class EditActivity : AppCompatActivity() {
             for (i in 0..recyclerView.childCount - 1) {
                 val holder =
                     recyclerView.getChildViewHolder(recyclerView.getChildAt(i)) as CustomAdapter.ViewHolder
-                adapter.hideKeyboard(holder.textEditView)
+                hideKeyboard(holder.textEditView)
             }
             adapter.updateList(ApplicationClass.instance.task.children)
         }
@@ -177,5 +179,10 @@ class EditActivity : AppCompatActivity() {
 
         // that data has been updated.
         adapter.notifyDataSetChanged()
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
