@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.litdev.taskorganiser.ApplicationClass
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.internal.throwMissingFieldException
 import kotlinx.serialization.json.Json
 import java.io.BufferedOutputStream
 import java.io.File
@@ -48,22 +49,30 @@ data class Action(var text: String,
     fun load(cacheDir: String, context: Context)
     {
         try {
-            InputStreamReader(FileInputStream(File(cacheDir, "version"))).use { bos ->
-                val ver = bos.readText().toInt()
-                if (ver <= ApplicationClass.instance.version)
-                {
-                    InputStreamReader(FileInputStream(File(cacheDir, "settings.json"))).use { bos ->
-                        val json = bos.readText()
-                        ApplicationClass.instance.settings = Json.decodeFromString<Settings>(json)
-                    }
-                    InputStreamReader(FileInputStream(File(cacheDir, "data.json"))).use { bos ->
-                        val json = bos.readText()
-                        deserialise(json)
+            if (!File(cacheDir, "version").exists()) {
+                initial()
+                save(cacheDir, context)
+            }
+            else
+            {
+                InputStreamReader(FileInputStream(File(cacheDir, "version"))).use { bos ->
+                    val ver = bos.readText().toInt()
+                    if (ver <= ApplicationClass.instance.version)
+                    {
+                        InputStreamReader(FileInputStream(File(cacheDir, "settings.json"))).use { bos ->
+                            val json = bos.readText()
+                            ApplicationClass.instance.settings = Json.decodeFromString<Settings>(json)
+                        }
+                        InputStreamReader(FileInputStream(File(cacheDir, "data.json"))).use { bos ->
+                            val json = bos.readText()
+                            deserialise(json)
+                        }
                     }
                 }
+                reset()
+                setParents(null)
+
             }
-            reset()
-            setParents(null)
         } catch (e: Exception) {
             Toast.makeText(context, "Loading action data failed", Toast.LENGTH_LONG).show()
             initial()
