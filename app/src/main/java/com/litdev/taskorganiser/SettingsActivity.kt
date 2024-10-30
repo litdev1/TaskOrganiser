@@ -45,7 +45,6 @@ class SettingsActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
         (findViewById<TextView>(R.id.toolBarTitle)!!).text = title
 
-        findViewById<EditText>(R.id.editTextUser).setText(ApplicationClass.instance.settings.user)
         findViewById<EditText>(R.id.editTextPhone).setText(ApplicationClass.instance.settings.phone)
         findViewById<CheckBox>(R.id.checkBoxUseSMS).isChecked = ApplicationClass.instance.settings.useSMS
     }
@@ -84,7 +83,6 @@ class SettingsActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        ApplicationClass.instance.settings.user = findViewById<EditText>(R.id.editTextUser).text.toString()
         ApplicationClass.instance.settings.phone = findViewById<EditText>(R.id.editTextPhone).text.toString()
         ApplicationClass.instance.settings.useSMS = findViewById<CheckBox>(R.id.checkBoxUseSMS).isChecked
 

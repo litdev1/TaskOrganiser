@@ -10,9 +10,7 @@ class ApplicationClass: Application() {
     var firstTime: Boolean = true
     val version: Int = 1
     var canUseSMS: Boolean = false
-    var canUseFILE: Boolean = false
     var settings: Settings = Settings(
-        "",
         "",
         true
     )

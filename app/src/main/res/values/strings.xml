@@ -2,23 +2,23 @@
     <string name="app_name">TaskOrganiser</string>
     <string name="info">Welcome to TaskOrganiser (or Tasky).
         \n\nIt is deigned to be a simple task and activity tool to aid those with limited memory for sequential tasks.
-        \n\nOn this screen you can set your name, a telephone number and an option to globally allow (or not) SMS message sending
-        when selected activities are completed.  These are all optional.  If SMS is not required,
-        then unselect this to prevent future SMS permission requests on startup.
-        \n\nYou can always return to the main Home screen by clicking the app icon on the top left or using the menu on the top right.
+        \n\nOn this screen you can set a telephone number to send SMS messages to a supervising adult when selected tasks are completed.
+        There is an option to globally allow (or not) SMS message sending.  If SMS is not required,
+        then unselect this to prevent potential SMS permission requests on startup.
+        \n\nYou can return to the main Home screen by clicking the app icon on the top left or using the menu on the top right.
         \n\nThe activities are divided into Actions and groups of Actions called Tasks.
-        \n\nThe Home and Back buttons at the bottom of the screen navigate to the first page or \'up\' to a parent Task in either the Home or Edit screens.
+        \n\nThe \'Home\' and \'Back\' buttons at the bottom of the screen navigate to the first page or \'up\' to a parent Task in either the Home or Edit screens.
         These buttons navigate without modifying completed Tasks or current editing.
         \n\nA sample Task (Shopping) and a sample Action (SMS test) are included to get started.
         \n\nEach Action or Task can be \'ticked off\' with a click once completed, and reverted with a left swipe.
         \n\nA clicked Task will open a page for its Actions, and once the last Action is completed control will return to the parent Task.
-        \n\nThe Tasks and Actions can be created on the Edit screen, where they can be:
-        \n\t► Top Add button to add to the end of the current list, where a floating keyboard helps
-        \n\t► Deleted (left swipe)
-        \n\t► Re-ordered (drag and drop)
+        \n\nThe Tasks and Actions can be created on the Edit screen:
+        \n\t► \'Add\' button to add an Action to the end of the current list
+        \n\t► Delete (left swipe)
+        \n\t► Re-order (drag and drop)
         \n\t► Set the Task or Action type, text description and optional SMS
-        \n\t► The top Undo button will undo all editing in the current Edit session
-        \n\t► The top Done button will save and end the editing session, returning to the main Tasks Home screen
+        \n\t► \'Undo\' button will undo all editing in the current Edit session
+        \n\t► \'Done\' button will save and end the editing session, returning to the main Tasks Home screen
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

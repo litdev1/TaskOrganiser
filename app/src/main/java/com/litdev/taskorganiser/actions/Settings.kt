@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 @SuppressLint("UnsafeOptInUsageError")
 @Serializable
-data class Settings(var user: String, var phone: String, var useSMS: Boolean)
+data class Settings(var phone: String, var useSMS: Boolean)
 {
 
 }

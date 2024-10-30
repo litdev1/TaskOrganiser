@@ -155,7 +155,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 !editable &&
                 oldState == StateType.NONE && action.sendSMS) {
                 val phoneNumber = ApplicationClass.instance.settings.phone
-                val message = ApplicationClass.instance.settings.user + " completed " +
+                val message = "Completed " +
                         if(action.type == ActionType.TASK) "task" else "action" + " : " + action.text
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)

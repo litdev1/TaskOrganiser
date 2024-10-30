@@ -7,7 +7,7 @@ The tasks can be edited and grouped into a tree of sub-tasks (actions).  Optiona
 ## Stored data
 The tasks can be created, edited and deleted within the app. They are stored internally within the app data in an un-encrypted json file.
 
-Optionally, a user name and telephone number may be added to send selected task completion SMS messages to a support adult.  The user name and telephone number are also stored internally un-encrypted with the app data.
+Optionally, a telephone number may be added to send selected task completion SMS messages to a support adult.  The telephone number is also stored internally un-encrypted with the app data.
 
 The user can optionally save or load json data storing the tasks to Download folder on the phone.  This can serve as a permanent backup, or potentially to share task lists.
 

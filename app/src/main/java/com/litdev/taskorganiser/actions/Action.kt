@@ -39,7 +39,9 @@ data class Action(var text: String,
                 val json = serialise()
                 bos.write(json.toByteArray())
             }
-            Toast.makeText(context, "Action data saved", Toast.LENGTH_SHORT).show()
+            if (!ApplicationClass.instance.firstTime) {
+                Toast.makeText(context, "Action data saved", Toast.LENGTH_SHORT).show()
+            }
         } catch (e: Exception) {
             Toast.makeText(context, "Saving action data failed", Toast.LENGTH_LONG).show()
         }
@@ -49,19 +51,26 @@ data class Action(var text: String,
     fun load(cacheDir: String, context: Context)
     {
         try {
-            if (!File(cacheDir, "version").exists()) {
+            if (ApplicationClass.instance.firstTime) {
                 initial()
                 save(cacheDir, context)
+                return
             }
-            else
-            {
+            else {
                 InputStreamReader(FileInputStream(File(cacheDir, "version"))).use { bos ->
                     val ver = bos.readText().toInt()
-                    if (ver <= ApplicationClass.instance.version)
-                    {
-                        InputStreamReader(FileInputStream(File(cacheDir, "settings.json"))).use { bos ->
+                    if (ver <= ApplicationClass.instance.version) {
+                        InputStreamReader(
+                            FileInputStream(
+                                File(
+                                    cacheDir,
+                                    "settings.json"
+                                )
+                            )
+                        ).use { bos ->
                             val json = bos.readText()
-                            ApplicationClass.instance.settings = Json.decodeFromString<Settings>(json)
+                            ApplicationClass.instance.settings =
+                                Json.decodeFromString<Settings>(json)
                         }
                         InputStreamReader(FileInputStream(File(cacheDir, "data.json"))).use { bos ->
                             val json = bos.readText()
@@ -71,7 +80,6 @@ data class Action(var text: String,
                 }
                 reset()
                 setParents(null)
-
             }
         } catch (e: Exception) {
             Toast.makeText(context, "Loading action data failed", Toast.LENGTH_LONG).show()

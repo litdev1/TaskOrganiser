@@ -38,8 +38,8 @@ class MainActivity : AppCompatActivity() {
         if (ApplicationClass.instance.firstTime)
         {
             ApplicationClass.instance.firstTime = false
-            val intent = Intent(this, SettingsActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, SettingsActivity::class.java)
+//            startActivity(intent)
         }
 
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
