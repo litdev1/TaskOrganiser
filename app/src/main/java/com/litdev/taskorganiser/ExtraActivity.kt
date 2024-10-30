@@ -29,17 +29,17 @@ class ExtraActivity : AppCompatActivity() {
             insets
         }
 
-        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+        (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+        (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
-        (findViewById(R.id.toolBarTitle) as TextView).text = title
+        (findViewById<TextView>(R.id.toolBarTitle)!!).text = title
 
         // Check if the fragment is already added
         if (savedInstanceState == null) {

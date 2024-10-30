@@ -17,11 +17,12 @@ import java.io.InputStreamReader
 @Serializable
 data class Action(var text: String,
                   var type: ActionType,
-                  var state: StateType,
                   var sendSMS: Boolean,
-                  var parent: Action?,
                   val children: ArrayList<Action>)
 {
+    var state: StateType = StateType.NONE
+    var parent: Action? = null
+
     fun save(cacheDir: String, context: Context?)
     {
         reset()
@@ -37,6 +38,7 @@ data class Action(var text: String,
                 val json = serialise()
                 bos.write(json.toByteArray())
             }
+            Toast.makeText(context, "Action data saved", Toast.LENGTH_SHORT).show()
         } catch (e: Exception) {
             Toast.makeText(context, "Saving action data failed", Toast.LENGTH_LONG).show()
         }
@@ -63,7 +65,7 @@ data class Action(var text: String,
             reset()
             setParents(null)
         } catch (e: Exception) {
-            //Toast.makeText(context, "Loading action data failed", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Loading action data failed", Toast.LENGTH_LONG).show()
             initial()
             save(cacheDir, context)
         }
@@ -107,9 +109,7 @@ data class Action(var text: String,
         return Action(
             "Action",
             ActionType.ACTION,
-            StateType.NONE,
             false,
-            null,
             ArrayList<Action>())
     }
 

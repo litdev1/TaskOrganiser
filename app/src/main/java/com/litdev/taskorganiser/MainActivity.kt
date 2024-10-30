@@ -42,22 +42,22 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+        (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
-            if (ApplicationClass.instance.task.children.size > 0) {
+            if (ApplicationClass.instance.task.children.isNotEmpty()) {
                 val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
                 recyclerView.scrollToPosition(0)
             }
         }
-        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+        (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
-            if (ApplicationClass.instance.task.children.size > 0) {
+            if (ApplicationClass.instance.task.children.isNotEmpty()) {
                 val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
                 recyclerView.scrollToPosition(0)
             }
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonMainHome).setOnClickListener { view ->
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
-            if (ApplicationClass.instance.task.children.size > 0) {
+            if (ApplicationClass.instance.task.children.isNotEmpty()) {
                 val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
                 recyclerView.scrollToPosition(0)
             }
@@ -152,7 +152,7 @@ class MainActivity : AppCompatActivity() {
     fun update()
     {
         title = ApplicationClass.instance.task.text
-        (findViewById(R.id.toolBarTitle) as TextView).text = title
+        (findViewById<TextView>(R.id.toolBarTitle)!!).text = title
         val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
 
         // this creates a vertical layout Manager

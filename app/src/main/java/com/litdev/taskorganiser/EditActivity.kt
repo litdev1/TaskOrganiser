@@ -31,13 +31,13 @@ class EditActivity : AppCompatActivity() {
             insets
         }
 
-        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+        (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
-        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+        (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -48,7 +48,7 @@ class EditActivity : AppCompatActivity() {
         findViewById<Button>(R.id.buttonEditHome).setOnClickListener { view ->
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
-            if (ApplicationClass.instance.task.children.size > 0) {
+            if (ApplicationClass.instance.task.children.isNotEmpty()) {
                 recyclerView.scrollToPosition(0)
             }
         }
@@ -79,7 +79,7 @@ class EditActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
     }
 
@@ -114,21 +114,21 @@ class EditActivity : AppCompatActivity() {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.editTasks -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, EditActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.extra -> {
                 val intent = Intent(this, ExtraActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -137,7 +137,7 @@ class EditActivity : AppCompatActivity() {
     fun update()
     {
         title = ApplicationClass.instance.task.text
-        (findViewById(R.id.toolBarTitle) as TextView).text = title
+        (findViewById<TextView>(R.id.toolBarTitle)!!).text = title
 
         //val view = findViewById<ConstraintLayout>(R.id.edit)
         //val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager

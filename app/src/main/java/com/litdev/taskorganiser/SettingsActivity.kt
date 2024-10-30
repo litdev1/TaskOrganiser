@@ -31,19 +31,19 @@ class SettingsActivity : AppCompatActivity() {
             insets
         }
 
-        (findViewById(R.id.info) as TextView).movementMethod = ScrollingMovementMethod()
+        (findViewById<TextView>(R.id.info)!!).movementMethod = ScrollingMovementMethod()
 
-        (findViewById(R.id.toolBarImage) as ImageView).setOnClickListener { view ->
+        (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
-        (findViewById(R.id.toolBarTitle) as TextView).setOnClickListener { view ->
+        (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
             val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent);
+            startActivity(intent)
         }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
-        (findViewById(R.id.toolBarTitle) as TextView).text = title
+        (findViewById<TextView>(R.id.toolBarTitle)!!).text = title
 
         findViewById<EditText>(R.id.editTextUser).setText(ApplicationClass.instance.settings.user)
         findViewById<EditText>(R.id.editTextPhone).setText(ApplicationClass.instance.settings.phone)
@@ -61,21 +61,21 @@ class SettingsActivity : AppCompatActivity() {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.editTasks -> {
                 ApplicationClass.instance.data.reset()
                 ApplicationClass.instance.data.setParents(null)
                 val intent = Intent(this, EditActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.settings -> {
                 val intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
             R.id.extra -> {
                 val intent = Intent(this, ExtraActivity::class.java)
-                startActivity(intent);
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -96,7 +96,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         catch (e: Exception)
         {
-            Toast.makeText(this, "Saving settings data failed", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Saving settings failed", Toast.LENGTH_LONG).show()
         }
     }
 }

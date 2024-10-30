@@ -53,7 +53,7 @@ class ExportFragment : Fragment() {
                                 file?.write(json.toByteArray())
                                 file?.close()
 
-                                Toast.makeText(context, "Data exported to $fileName", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "Data exported to $fileName", Toast.LENGTH_SHORT).show()
                             }
                             1 -> {
                                 val file = context?.contentResolver?.openInputStream(data?: Uri.EMPTY)
@@ -61,7 +61,7 @@ class ExportFragment : Fragment() {
                                 ApplicationClass.instance.data.deserialise(json?: "")
                                 ApplicationClass.instance.data.save(context?.cacheDir.toString(), context)
 
-                                Toast.makeText(context, "Data imported from $fileName", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "Data imported from $fileName", Toast.LENGTH_SHORT).show()
                             }
                             2 -> {
                                 val file = context?.contentResolver?.openInputStream(data?: Uri.EMPTY)
@@ -70,12 +70,12 @@ class ExportFragment : Fragment() {
                                 ApplicationClass.instance.data.children.addAll(newData.children)
                                 ApplicationClass.instance.data.save(context?.cacheDir.toString(), context)
 
-                                Toast.makeText(context, "Data appended from $fileName", Toast.LENGTH_LONG).show()
+                                Toast.makeText(context, "Data appended from $fileName", Toast.LENGTH_SHORT).show()
                             }
                         }
 
                     } catch (e: Exception) {
-                        Toast.makeText(context, e.toString(), Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, "Data load/save failed", Toast.LENGTH_LONG).show()
                     }
                 }
             }

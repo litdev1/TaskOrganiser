@@ -147,7 +147,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
             }
             if (action.type == ActionType.ACTION && !editable && action.parent != null) {
                 val parent = action.parent
-                if (parent?.children?.last() == action && parent?.parent != null) {
+                if (parent?.children?.last() == action && parent.parent != null) {
                     ApplicationClass.instance.task = parent.parent!!
                     update()
                 }
@@ -162,7 +162,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                    //Toast.makeText(view.context, message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
                     Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
                 }
@@ -179,15 +179,11 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         val editText = view as EditText
                         action.text = editText.text.toString()
                     }
-                    else
-                    {
-                        val a = "lostFocus"
-                    }
                     updateCall = false
                 }
                 catch (e: Exception)
                 {
-                    val a = 1;
+                    val a = 1
                 }
             }
             holder.sendSMSView.setOnClickListener { view ->
@@ -196,10 +192,10 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 val checkBox = view as CheckBox
                 action.sendSMS = checkBox.isChecked
             }
-            holder.chipGroupView.setOnCheckedStateChangeListener() { group, checkedIds ->
+            holder.chipGroupView.setOnCheckedStateChangeListener { group, checkedIds ->
                 val position = holder.layoutPosition
                 val action = mList[position]
-                if (checkedIds.size > 0) {
+                if (checkedIds.isNotEmpty()) {
                     var newType =
                         if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
                     if (action.type != newType) {
@@ -220,7 +216,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
     fun hideKeyboard(view: View) {
         val inputManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputManager.hideSoftInputFromWindow(view.getWindowToken(), 0)
+        inputManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     // Holds the views for adding it to image and text
@@ -270,7 +266,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 // on below line we are getting the item at a particular position.
                 try {
                     val position = viewHolder.adapterPosition
-                    val action: Action = adapter.mList.get(position)
+                    val action: Action = adapter.mList[position]
 
                     if (direction == ItemTouchHelper.LEFT) {
 
