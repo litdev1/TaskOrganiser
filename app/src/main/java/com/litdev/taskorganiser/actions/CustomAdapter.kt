@@ -51,8 +51,8 @@ class CustomAdapter(var mList: ArrayList<Action>,
         try {
             val action = mList[position]
 
-            setControls(holder, action, position)
-            setVisuals(holder, action, position)
+            setControls(holder, action)
+            setVisuals(holder, action)
             setEvents(holder)
         }
         catch (e: Exception)
@@ -67,7 +67,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         updateCall = true
     }
 
-    fun setControls(holder: ViewHolder, action: Action, position: Int)
+    fun setControls(holder: ViewHolder, action: Action)
     {
         val currentNightMode = holder.layoutView.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
@@ -97,7 +97,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         holder.chipGroupView.check(if (action.type == ActionType.TASK) holder.taskChipView.id else holder.actionChipView.id)
     }
 
-    fun setVisuals(holder: ViewHolder, action: Action, position: Int)
+    fun setVisuals(holder: ViewHolder, action: Action)
     {
         val currentNightMode = holder.layoutView.context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
 
