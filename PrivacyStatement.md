@@ -1,6 +1,6 @@
 # Privacy statement for Task Organiser
 ## Overview
-This is a simple app to organise tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties.
+This is an app to organise tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties.
 
 The tasks can be edited and grouped into a tree of sub-tasks (actions).  Optionally, an SMS can be sent to a supporting adult to inform them that a task has been completed, for example leaving the house to go shopping, catching a bus and returning.
 
