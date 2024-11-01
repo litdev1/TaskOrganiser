@@ -65,6 +65,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonAdd).setOnClickListener { view ->
+            saveEdits()
             ApplicationClass.instance.task.children.add(ApplicationClass.instance.data.default())
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
