@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="15dp"
                 android:singleLine="false"
                 android:text="Action"
                 android:textSize="20sp"
@@ -43,7 +42,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginLeft="15dp"
                 android:singleLine="false"
                 android:text="Action"
                 android:textCursorDrawable="@null"
@@ -56,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
-            android:gravity="left|center_vertical"
+            android:gravity="start|center_vertical"
             android:padding="5dp">
 
             <com.google.android.material.chip.ChipGroup
@@ -94,7 +92,7 @@
                 android:contentDescription="Toggle global use of SMS alerts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="left|center_vertical"
+                android:gravity="start|center_vertical"
                 android:text="Send SMS"
                 android:textColor="?android:attr/textColorPrimary"
                 android:theme="@style/checkBoxStyle"/>

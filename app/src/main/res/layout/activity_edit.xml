@@ -24,7 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
+                android:gravity="start|center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -73,7 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_home_24dp"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:text="Home"
                     android:textColor="?android:attr/textColorPrimary"
                     app:cornerRadius="10dp"
@@ -88,7 +88,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_undo_24dp"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:text="Back"
                     android:textColor="?android:attr/textColorPrimary"
                     app:cornerRadius="10dp"
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:drawableLeft="@drawable/ic_add_24dp"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:text="Add"
                     android:textColor="?android:attr/textColorPrimary"
                     app:cornerRadius="10dp"
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_undo_24dp"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:text="Undo"
                     android:textColor="?android:attr/textColorPrimary"
                     app:cornerRadius="10dp"
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_done_24dp"
-                    android:gravity="left|center_vertical"
+                    android:gravity="start|center_vertical"
                     android:text="Done"
                     android:textColor="?android:attr/textColorPrimary"
                     app:cornerRadius="10dp"
