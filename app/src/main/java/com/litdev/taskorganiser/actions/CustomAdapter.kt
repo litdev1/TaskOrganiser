@@ -312,7 +312,9 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         }
                         else
                         {
-                            action.state = StateType.NONE
+                            val parent = action.parent
+                            action.reset()
+                            action.setParents(parent)
                             adapter.mList.add(position, action)
                             adapter.notifyItemInserted(position)
                         }
