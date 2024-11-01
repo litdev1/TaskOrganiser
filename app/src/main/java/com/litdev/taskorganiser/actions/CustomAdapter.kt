@@ -28,6 +28,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     val editable: Boolean) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     var updateCall: Boolean = false
+    private val viewHolders = mutableListOf<ViewHolder>()
 
     // create new views
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,6 +38,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
             .inflate(R.layout.card_view, parent, false)
 
         val holder = ViewHolder(view)
+        viewHolders.add(holder)
         holder.textView.visibility = if(editable) View.GONE else View.VISIBLE
         holder.textEditView.visibility = if(editable) View.VISIBLE else View.GONE
         holder.sendSMSView.visibility = if(editable) View.VISIBLE else View.GONE
@@ -140,6 +142,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
 //                setVisuals(holder, action, position)
             }
             if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
+                saveEdits()
                 ApplicationClass.instance.task = action
                 update()
             }
@@ -206,6 +209,17 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     }
                 }
             }
+        }
+    }
+
+    fun saveEdits()
+    {
+        for (i in 0..viewHolders.size - 1)
+        {
+            val holder = viewHolders[i]
+            val position = holder.layoutPosition
+            val action = mList[position]
+            action.text = holder.textEditView.text.toString()
         }
     }
 

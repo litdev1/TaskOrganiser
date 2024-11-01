@@ -88,6 +88,12 @@ class EditActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        saveEdits()
+        ApplicationClass.instance.data.save(cacheDir.toString(), this)
+    }
+
+    fun saveEdits()
+    {
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
         for (i in 0..recyclerView.childCount - 1)
         {
@@ -96,7 +102,6 @@ class EditActivity : AppCompatActivity() {
             ApplicationClass.instance.task.children[holder.layoutPosition].sendSMS = holder.sendSMSView.isChecked
             ApplicationClass.instance.task.children[holder.layoutPosition].type = if(holder.taskChipView.isChecked) ActionType.TASK else ActionType.ACTION
         }
-        ApplicationClass.instance.data.save(cacheDir.toString(), this)
     }
 
     override fun onResume() {
