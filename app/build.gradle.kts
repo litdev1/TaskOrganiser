@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.litdev.taskorganiser"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.litdev.taskorganiser"
