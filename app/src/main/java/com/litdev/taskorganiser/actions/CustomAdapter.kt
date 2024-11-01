@@ -3,6 +3,7 @@ package com.litdev.taskorganiser.actions
 import android.content.res.Configuration
 import android.graphics.Color
 import android.telephony.SmsManager
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -218,8 +220,10 @@ class CustomAdapter(var mList: ArrayList<Action>,
         {
             val holder = viewHolders[i]
             val position = holder.layoutPosition
-            val action = mList[position]
-            action.text = holder.textEditView.text.toString()
+            if (position >= 0 && position < mList.size) {
+                val action = mList[position]
+                action.text = holder.textEditView.text.toString()
+            }
         }
     }
 
@@ -288,15 +292,13 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
                         if (editable) {
                             // below line is to display our snackbar with action.
-                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, Snackbar.LENGTH_LONG)
-                            /*
-                            val layoutParams = snackBar.view.layoutParams as CoordinatorLayout.LayoutParams
-                            layoutParams.anchorId = R.id.navigation //Id for your bottomNavBar or TabLayout
-                            layoutParams.anchorGravity = Gravity.TOP
-                            layoutParams.gravity = Gravity.TOP
-                            snackBar.view.layoutParams = layoutParams
-                            */
-                            snackBar.setAnchorView(viewHolder.itemView)
+                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, Snackbar.LENGTH_SHORT)
+//                            val layoutParams = snackBar.view.layoutParams
+//                            layoutParams.anchorId = R.id.footerEdit //Id for your bottomNavBar or TabLayout
+//                            layoutParams.anchorGravity = Gravity.TOP
+//                            layoutParams.gravity = Gravity.TOP
+//                            snackBar.view.layoutParams = layoutParams
+                            snackBar.setAnchorView(R.id.footerEdit)
                             snackBar.setAction(
                                 "Undo",
                                 View.OnClickListener {
