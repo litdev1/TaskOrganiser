@@ -48,6 +48,7 @@ class EditActivity : AppCompatActivity() {
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
 
         findViewById<Button>(R.id.buttonEditHome).setOnClickListener { view ->
+            saveEdits()
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
             if (ApplicationClass.instance.task.children.isNotEmpty()) {
@@ -57,6 +58,7 @@ class EditActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.buttonEditBack).setOnClickListener { view ->
             if (null != ApplicationClass.instance.task.parent) {
+                saveEdits()
                 ApplicationClass.instance.task = ApplicationClass.instance.task.parent!!
                 update()
             }
@@ -88,9 +90,14 @@ class EditActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        saveEdits()
+        ApplicationClass.instance.data.save(cacheDir.toString(), this)
+    }
+
+    fun saveEdits()
+    {
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
         (recyclerView.adapter as CustomAdapter).saveEdits()
-        ApplicationClass.instance.data.save(cacheDir.toString(), this)
     }
 
     override fun onResume() {
