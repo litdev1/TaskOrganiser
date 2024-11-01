@@ -29,6 +29,7 @@
 
                 <ImageView
                     android:id="@+id/toolBarImage"
+                    android:contentDescription="Return to Home and reset all tasks"
                     android:layout_width="48dp"
                     android:layout_height="wrap_content"
                     app:srcCompat="@drawable/launcher" />
@@ -39,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="TextView"
-                    android:textSize="18dp"/>
+                    android:textSize="18sp"/>
 
             </LinearLayout>
 
@@ -51,6 +52,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/main_recycler"
+                android:contentDescription="Tap tasks and actions as they are completed"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constrainedHeight="true"

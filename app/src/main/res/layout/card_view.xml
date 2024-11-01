@@ -69,6 +69,7 @@
                 <!-- We reverse the chips to look better -->
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTask"
+                    android:contentDescription="Set this as a task with action children"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,6 +79,7 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipAction"
+                    android:contentDescription="Set this as an action"
                     style="@style/Widget.MaterialComponents.Chip.Choice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -89,6 +91,7 @@
 
             <CheckBox
                 android:id="@+id/checkBoxSMS"
+                android:contentDescription="Toggle global use of SMS alerts"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="left|center_vertical"
