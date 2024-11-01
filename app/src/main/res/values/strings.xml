@@ -1,24 +1,25 @@
 <resources>
     <string name="app_name">TaskOrganiser</string>
     <string name="info">Welcome to TaskOrganiser (or Tasky).
-        \n\nThis is an app to organise tasks and tick them off as they are doneThis is an app to organise tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties..  It is aimed at independent supported living for users with memory difficulties.
-        \n\nOn this screen you can set a telephone number to send SMS messages to a supervising adult when selected tasks are completed.
+        \n\nThis is an app to organise Tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties.
+        \n\nOn this screen you can set a telephone number to send SMS messages to a supervising adult when selected Tasks are completed.
         There is an option to globally allow (or not) SMS message sending.  If SMS is not required,
         then unselect this to prevent potential SMS permission requests on startup.
-        \n\nYou can return to the main Home screen by clicking the app icon on the top left or using the menu on the top right.
-        \n\nThe activities are divided into Actions and groups of Actions called Tasks.
+        \n\nYou can return to the main Home screen and reset all Actions to uncompleted by clicking the app icon on the top left or using the menu on the top right.
+        \n\nActivities are divided into Actions and groups of Actions called Tasks.
         \n\nThe \'Home\' and \'Back\' buttons at the bottom of the screen navigate to the first page or \'up\' to a parent Task in either the Home or Edit screens.
         These buttons navigate without modifying completed Tasks or current editing.
         \n\nA sample Task (Shopping) and a sample Action (SMS test) are included to get started.
         \n\nEach Action or Task can be \'ticked off\' with a click once completed, and reverted with a left swipe.
         \n\nA clicked Task will open a page for its Actions, and once the last Action is completed control will return to the parent Task.
-        \n\nThe Tasks and Actions can be created on the Edit screen:
+        \n\nThe Tasks and Actions can be created or edited on the Edit screen:
         \n\t► \'Add\' button to add an Action to the end of the current list
         \n\t► Delete (left swipe)
         \n\t► Re-order (drag and drop)
         \n\t► Set the Task or Action type, text description and optional SMS
         \n\t► \'Undo\' button will undo all editing in the current Edit session
         \n\t► \'Done\' button will save and end the editing session, returning to the main Tasks Home screen
+        \n\nThe \'Extras\' menu item contains options to export and import the Task database to and from Download folder.
     </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
