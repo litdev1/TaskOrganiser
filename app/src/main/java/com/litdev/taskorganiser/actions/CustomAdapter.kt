@@ -187,12 +187,14 @@ class CustomAdapter(var mList: ArrayList<Action>,
             holder.sendSMSView.setOnClickListener { view ->
                 val position = holder.layoutPosition
                 val action = mList[position]
+                action.text = holder.textEditView.text.toString()
                 val checkBox = view as CheckBox
                 action.sendSMS = checkBox.isChecked
             }
             holder.chipGroupView.setOnCheckedStateChangeListener { group, checkedIds ->
                 val position = holder.layoutPosition
                 val action = mList[position]
+                action.text = holder.textEditView.text.toString()
                 if (checkedIds.isNotEmpty()) {
                     var newType =
                         if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
