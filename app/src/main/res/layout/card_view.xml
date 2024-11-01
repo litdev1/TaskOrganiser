@@ -44,6 +44,8 @@
                 android:layout_marginStart="10dp"
                 android:singleLine="false"
                 android:text="Action"
+                android:contentDescription="Action text"
+                android:inputType="textMultiLine"
                 android:textCursorDrawable="@null"
                 android:textSize="20sp"
                 android:textStyle="bold" />
