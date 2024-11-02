@@ -199,7 +199,6 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         smsManager.sendTextMessage(phoneNumber, null, message, null, null)
                         Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
                     }
-
                 } catch (e: Exception) {
                     if (phoneNumber.isEmpty()) {
                         Toast.makeText(view.context, "Number not set", Toast.LENGTH_LONG).show()
