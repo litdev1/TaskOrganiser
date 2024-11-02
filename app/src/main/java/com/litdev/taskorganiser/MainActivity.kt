@@ -20,7 +20,6 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litdev.taskorganiser.actions.CustomAdapter
-import com.litdev.taskorganiser.actions.StateType
 
 class MainActivity : AppCompatActivity() {
     private val SEND_SMS_PERMISSION_CODE = 100
