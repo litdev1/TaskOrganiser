@@ -1,5 +1,10 @@
 package com.litdev.taskorganiser.actions
 
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.graphics.Color
 import android.telephony.SmsManager
@@ -162,8 +167,39 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         if(action.type == ActionType.TASK) "task" else "action" + " : " + action.text
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
-                    smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                    Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
+
+                    val sentIntent = Intent("SMS_SENT")
+                    val deliveredIntent = Intent("SMS_DELIVERED")
+                    val sentPI = PendingIntent.getBroadcast(view.context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
+                    val deliveredPI = PendingIntent.getBroadcast(view.context, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                        // Action for API level 26 and above
+                        view.context.registerReceiver(object : BroadcastReceiver() {
+                            override fun onReceive(context: Context, intent: Intent) {
+                                when (resultCode) {
+                                    android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS Generic failure", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS No service", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS Null PDU", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS Radio off", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }, IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED)
+                        view.context.registerReceiver(object : BroadcastReceiver() {
+                            override fun onReceive(context: Context, intent: Intent) {
+                                when (resultCode) {
+                                    android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS delivered", Toast.LENGTH_SHORT).show()
+                                    android.app.Activity.RESULT_CANCELED -> Toast.makeText(context, "SMS not delivered", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        }, IntentFilter("SMS_DELIVERED"), Context.RECEIVER_NOT_EXPORTED)
+                        smsManager.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI)
+                    } else {
+                        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                        Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
+                    }
+
                 } catch (e: Exception) {
                     if (phoneNumber.isEmpty()) {
                         Toast.makeText(view.context, "Number not set", Toast.LENGTH_LONG).show()
