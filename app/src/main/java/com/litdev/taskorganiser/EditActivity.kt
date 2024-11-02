@@ -17,6 +17,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import com.litdev.taskorganiser.actions.StateType
 
 class EditActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null

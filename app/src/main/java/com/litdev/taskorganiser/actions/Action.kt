@@ -166,5 +166,15 @@ data class Action(var text: String,
             item.setParents(this)
         }
     }
+
+    fun isDone() : Boolean
+    {
+        var isDone = state == StateType.DONE
+        for (item in children)
+        {
+            if (item.isDone()) isDone = true
+        }
+        return isDone
+    }
 }
 

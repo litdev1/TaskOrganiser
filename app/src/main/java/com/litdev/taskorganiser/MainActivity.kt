@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litdev.taskorganiser.actions.CustomAdapter
+import com.litdev.taskorganiser.actions.StateType
 
 class MainActivity : AppCompatActivity() {
     private val SEND_SMS_PERMISSION_CODE = 100
@@ -90,6 +91,11 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.buttonMainBack).setOnClickListener { view ->
             if (null != ApplicationClass.instance.task.parent) {
+//                ApplicationClass.instance.task.state = StateType.NONE
+//                if (ApplicationClass.instance.task.isDone())
+//                {
+//                    ApplicationClass.instance.task.state = StateType.DONE
+//                }
                 ApplicationClass.instance.task = ApplicationClass.instance.task.parent!!
                 update()
             }
