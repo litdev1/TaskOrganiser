@@ -168,13 +168,13 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
 
-                    val sentIntent = Intent("SMS_SENT")
-                    val deliveredIntent = Intent("SMS_DELIVERED")
-                    val sentPI = PendingIntent.getBroadcast(view.context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
-                    val deliveredPI = PendingIntent.getBroadcast(view.context, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
-
                     if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                         // Action for API level 26 and above
+                        val sentIntent = Intent("SMS_SENT")
+                        val deliveredIntent = Intent("SMS_DELIVERED")
+                        val sentPI = PendingIntent.getBroadcast(view.context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
+                        val deliveredPI = PendingIntent.getBroadcast(view.context, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
+
                         view.context.registerReceiver(object : BroadcastReceiver() {
                             override fun onReceive(context: Context, intent: Intent) {
                                 when (resultCode) {
