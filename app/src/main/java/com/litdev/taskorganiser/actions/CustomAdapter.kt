@@ -179,10 +179,10 @@ class CustomAdapter(var mList: ArrayList<Action>,
                             override fun onReceive(context: Context, intent: Intent) {
                                 when (resultCode) {
                                     android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS Generic failure", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS No service", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS Null PDU", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS Radio off", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS generic failure", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS no service", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS null PDU", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS radio off", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         }, IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED)
