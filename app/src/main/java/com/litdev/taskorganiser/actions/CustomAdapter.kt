@@ -3,7 +3,6 @@ package com.litdev.taskorganiser.actions
 import android.content.res.Configuration
 import android.graphics.Color
 import android.telephony.SmsManager
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -167,7 +165,12 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     smsManager.sendTextMessage(phoneNumber, null, message, null, null)
                     Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
-                    Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
+                    if (phoneNumber.isEmpty()) {
+                        Toast.makeText(view.context, "Number not set", Toast.LENGTH_LONG).show()
+                    }
+                    else {
+                        Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
+                    }
                 }
             }
         }

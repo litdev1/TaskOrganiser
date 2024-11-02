@@ -10,7 +10,6 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.litdev.taskorganiser.actions.ActionType
 import com.litdev.taskorganiser.actions.CustomAdapter
 import android.view.Menu
 import android.view.MenuItem
