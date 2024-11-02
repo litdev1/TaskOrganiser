@@ -62,7 +62,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         }
         catch (e: Exception)
         {
-            val a = 1
+            Toast.makeText(holder.itemView.context, "Bind view failure", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -179,10 +179,10 @@ class CustomAdapter(var mList: ArrayList<Action>,
                             override fun onReceive(context: Context, intent: Intent) {
                                 when (resultCode) {
                                     android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS generic failure", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS no service", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS null PDU", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS radio off", Toast.LENGTH_SHORT).show()
+                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS generic failure", Toast.LENGTH_LONG).show()
+                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS no service", Toast.LENGTH_LONG).show()
+                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS null PDU", Toast.LENGTH_LONG).show()
+                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS radio off", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }, IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED)
@@ -190,7 +190,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                             override fun onReceive(context: Context, intent: Intent) {
                                 when (resultCode) {
                                     android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS delivered", Toast.LENGTH_SHORT).show()
-                                    android.app.Activity.RESULT_CANCELED -> Toast.makeText(context, "SMS not delivered", Toast.LENGTH_SHORT).show()
+                                    android.app.Activity.RESULT_CANCELED -> Toast.makeText(context, "SMS not delivered", Toast.LENGTH_LONG).show()
                                 }
                             }
                         }, IntentFilter("SMS_DELIVERED"), Context.RECEIVER_NOT_EXPORTED)
@@ -213,19 +213,13 @@ class CustomAdapter(var mList: ArrayList<Action>,
         //Edit events
         if (editable) {
             holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
-                try {
-                    val position = holder.layoutPosition
-                    val action = mList[position]
-                    if (!updateCall && !hasFocus) {
-                        val editText = view as EditText
-                        action.text = editText.text.toString()
-                    }
-                    updateCall = false
+                val position = holder.layoutPosition
+                val action = mList[position]
+                if (!updateCall && !hasFocus) {
+                    val editText = view as EditText
+                    action.text = editText.text.toString()
                 }
-                catch (e: Exception)
-                {
-                    val a = 1
-                }
+                updateCall = false
             }
             holder.sendSMSView.setOnClickListener { view ->
                 val position = holder.layoutPosition
@@ -292,7 +286,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
         ) {
             override fun onMove(
                 recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
+                holder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 try {
@@ -300,7 +294,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     // this method is called
                     // when the item is moved.
                     //return false
-                    val from = viewHolder.adapterPosition
+                    val from = holder.adapterPosition
                     val to = target.adapterPosition
                     Collections.swap(adapter.mList, from, to)
                     adapter.notifyItemMoved(from, to)
@@ -308,19 +302,19 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 }
                 catch (e: Exception)
                 {
+                    Toast.makeText(holder.itemView.context, "Move failure", Toast.LENGTH_LONG).show()
                     return false
                 }
             }
 
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            override fun onSwiped(holder: RecyclerView.ViewHolder, direction: Int) {
                 // this method is called when we swipe our item.
                 // on below line we are getting the item at a particular position.
                 try {
-                    val position = viewHolder.adapterPosition
+                    val position = holder.adapterPosition
                     val action: Action = adapter.mList[position]
 
                     if (direction == ItemTouchHelper.LEFT) {
-
                         // this method is called when item is swiped.
                         // below line is to remove item from our array list.
                         adapter.mList.removeAt(position)
@@ -330,7 +324,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
 
                         if (editable) {
                             // below line is to display our snackbar with action.
-                            val snackBar = Snackbar.make(viewHolder.itemView, "Deleted " + action.text, Snackbar.LENGTH_SHORT)
+                            val snackBar = Snackbar.make(holder.itemView, "Deleted " + action.text, Snackbar.LENGTH_SHORT)
 //                            val layoutParams = snackBar.view.layoutParams
 //                            layoutParams.anchorId = R.id.footerEdit //Id for your bottomNavBar or TabLayout
 //                            layoutParams.anchorGravity = Gravity.TOP
@@ -366,7 +360,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 }
                 catch (e: Exception)
                 {
-                    val a = 1
+                    Toast.makeText(holder.itemView.context, "Swipe failure", Toast.LENGTH_LONG).show()
                 }
             }
         })
