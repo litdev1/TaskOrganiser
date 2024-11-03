@@ -168,8 +168,8 @@ class CustomAdapter(var mList: ArrayList<Action>,
                 try {
                     val smsManager = view.context.getSystemService(SmsManager::class.java)
 
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                        // Action for API level 26 and above
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                        // Action for API level 33 and above
                         val sentIntent = Intent("SMS_SENT")
                         val deliveredIntent = Intent("SMS_DELIVERED")
                         val sentPI = PendingIntent.getBroadcast(view.context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
