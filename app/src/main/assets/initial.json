@@ -1,0 +1,173 @@
+{
+  "text": "Home",
+  "type": "HOME",
+  "sendSMS": false,
+  "children": [
+    {
+      "text": "Shopping",
+      "type": "TASK",
+      "sendSMS": false,
+      "children": [
+        {
+          "text": "Wallet - check cards or cash",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Keys",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Glasses",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Coat/umbrella",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Bag for shopping",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Shopping list",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Lock door",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "Shopping List",
+      "type": "TASK",
+      "sendSMS": false,
+      "children": [
+        {
+          "text": "Bread",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Milk",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Cheese",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Eggs",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Potatoes",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Onions",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Biscuits",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "Morning",
+      "type": "TASK",
+      "sendSMS": false,
+      "children": [
+        {
+          "text": "Get dressed",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Breakfast",
+          "type": "TASK",
+          "sendSMS": false,
+          "children": [
+            {
+              "text": "Toast",
+              "type": "ACTION",
+              "sendSMS": false,
+              "children": []
+            },
+            {
+              "text": "Tea",
+              "type": "ACTION",
+              "sendSMS": false,
+              "children": []
+            },
+            {
+              "text": "Tidy up",
+              "type": "ACTION",
+              "sendSMS": false,
+              "children": []
+            }
+          ]
+        },
+        {
+          "text": "Brush teeth",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Wash face",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Phone Andy",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        },
+        {
+          "text": "Buy paper",
+          "type": "ACTION",
+          "sendSMS": false,
+          "children": []
+        }
+      ]
+    },
+    {
+      "text": "SMS test",
+      "type": "ACTION",
+      "sendSMS": true,
+      "children": []
+    }
+  ]
+}

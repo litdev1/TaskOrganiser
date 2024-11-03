@@ -59,14 +59,7 @@ data class Action(var text: String,
                 InputStreamReader(FileInputStream(File(cacheDir, "version"))).use { bos ->
                     val ver = bos.readText().toInt()
                     if (ver <= ApplicationClass.instance.version) {
-                        InputStreamReader(
-                            FileInputStream(
-                                File(
-                                    cacheDir,
-                                    "settings.json"
-                                )
-                            )
-                        ).use { bos ->
+                        InputStreamReader(FileInputStream(File(cacheDir,"settings.json"))).use { bos ->
                             val json = bos.readText()
                             ApplicationClass.instance.settings =
                                 Json.decodeFromString<Settings>(json)
@@ -92,6 +85,10 @@ data class Action(var text: String,
 
     fun initial()
     {
+//        val json = this::class.java.getResource("/assets/initial.json")?.readText()
+//        deserialise(json.toString())
+//        return
+
         children.clear()
 
         children.add(default())

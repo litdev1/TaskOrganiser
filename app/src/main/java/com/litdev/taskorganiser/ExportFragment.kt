@@ -82,7 +82,7 @@ class ExportFragment : Fragment() {
 
         view.findViewById<Button>(R.id.buttonExport).setOnClickListener {
             val intent = Intent()
-                .setType("application/octet-stream")
+                .setType("application/json")
                 .setAction(Intent.ACTION_CREATE_DOCUMENT)
                 .addCategory(Intent.CATEGORY_OPENABLE)
                 .putExtra(Intent.EXTRA_TITLE, "tasky.json")
@@ -93,7 +93,7 @@ class ExportFragment : Fragment() {
 
         view.findViewById<Button>(R.id.buttonImport).setOnClickListener {
             val intent = Intent()
-                .setType("*/*")
+                .setType("application/json")
                 .setAction(Intent.ACTION_OPEN_DOCUMENT)
                 .addCategory(Intent.CATEGORY_OPENABLE)
                 .putExtra(Intent.EXTRA_TITLE, "tasky.json")
@@ -104,7 +104,7 @@ class ExportFragment : Fragment() {
 
         view.findViewById<Button>(R.id.buttonAppend).setOnClickListener {
             val intent = Intent()
-                .setType("*/*")
+                .setType("application/json")
                 .setAction(Intent.ACTION_OPEN_DOCUMENT)
                 .addCategory(Intent.CATEGORY_OPENABLE)
                 .putExtra(Intent.EXTRA_TITLE, "tasky.json")
