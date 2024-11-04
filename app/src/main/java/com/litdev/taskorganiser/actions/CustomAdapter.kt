@@ -138,73 +138,124 @@ class CustomAdapter(var mList: ArrayList<Action>,
         //Click events
         holder.itemView.setOnClickListener { view ->
             val position = holder.layoutPosition
-            val action = mList[position]
-            val oldState = action.state
-            action.state = StateType.DONE
-            if (!editable && oldState != action.state) {
-                notifyItemChanged(position)
+            if (position >= 0 && position < mList.size) {
+                val action = mList[position]
+                val oldState = action.state
+                action.state = StateType.DONE
+                if (!editable && oldState != action.state) {
+                    notifyItemChanged(position)
 //                setControls(holder, action, position)
 //                setVisuals(holder, action, position)
-            }
-            if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
-                saveEdits()
-                ApplicationClass.instance.task = action
-                update()
-            }
-            if (action.type == ActionType.ACTION && !editable && action.parent != null) {
-                val parent = action.parent
-                if (parent?.children?.last() == action && parent.parent != null) {
-                    ApplicationClass.instance.task = parent.parent!!
+                }
+                if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
+                    saveEdits()
+                    ApplicationClass.instance.task = action
                     update()
                 }
-            }
-            if (ApplicationClass.instance.canUseSMS &&
-                ApplicationClass.instance.settings.useSMS &&
-                !editable &&
-                oldState == StateType.NONE && action.sendSMS) {
-                val phoneNumber = ApplicationClass.instance.settings.phone
-                val message = "Completed " +
-                        if(action.type == ActionType.TASK) "task" else "action" + " : " + action.text
-                try {
-                    val smsManager = view.context.getSystemService(SmsManager::class.java)
-
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                        // Action for API level 33 and above
-                        val sentIntent = Intent("SMS_SENT")
-                        val deliveredIntent = Intent("SMS_DELIVERED")
-                        val sentPI = PendingIntent.getBroadcast(view.context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE)
-                        val deliveredPI = PendingIntent.getBroadcast(view.context, 0, deliveredIntent, PendingIntent.FLAG_IMMUTABLE)
-
-                        view.context.registerReceiver(object : BroadcastReceiver() {
-                            override fun onReceive(context: Context, intent: Intent) {
-                                when (resultCode) {
-                                    android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS sent", Toast.LENGTH_SHORT).show()
-                                    SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(context, "SMS generic failure", Toast.LENGTH_LONG).show()
-                                    SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(context, "SMS no service", Toast.LENGTH_LONG).show()
-                                    SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(context, "SMS null PDU", Toast.LENGTH_LONG).show()
-                                    SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(context, "SMS radio off", Toast.LENGTH_LONG).show()
-                                }
-                            }
-                        }, IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED)
-                        view.context.registerReceiver(object : BroadcastReceiver() {
-                            override fun onReceive(context: Context, intent: Intent) {
-                                when (resultCode) {
-                                    android.app.Activity.RESULT_OK -> Toast.makeText(context, "SMS delivered", Toast.LENGTH_SHORT).show()
-                                    android.app.Activity.RESULT_CANCELED -> Toast.makeText(context, "SMS not delivered", Toast.LENGTH_LONG).show()
-                                }
-                            }
-                        }, IntentFilter("SMS_DELIVERED"), Context.RECEIVER_NOT_EXPORTED)
-                        smsManager.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI)
-                    } else {
-                        smsManager.sendTextMessage(phoneNumber, null, message, null, null)
-                        Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
+                if (action.type == ActionType.ACTION && !editable && action.parent != null) {
+                    val parent = action.parent
+                    if (parent?.children?.last() == action && parent.parent != null) {
+                        ApplicationClass.instance.task = parent.parent!!
+                        update()
                     }
-                } catch (e: Exception) {
-                    if (phoneNumber.isEmpty()) {
-                        Toast.makeText(view.context, "Number not set", Toast.LENGTH_LONG).show()
-                    }
-                    else {
-                        Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
+                }
+                if (ApplicationClass.instance.canUseSMS &&
+                    ApplicationClass.instance.settings.useSMS &&
+                    !editable &&
+                    oldState == StateType.NONE && action.sendSMS
+                ) {
+                    val phoneNumber = ApplicationClass.instance.settings.phone
+                    val message = "Completed " +
+                            if (action.type == ActionType.TASK) "task" else "action" + " : " + action.text
+                    try {
+                        val smsManager = view.context.getSystemService(SmsManager::class.java)
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                            // Action for API level 33 and above
+                            val sentIntent = Intent("SMS_SENT")
+                            val deliveredIntent = Intent("SMS_DELIVERED")
+                            val sentPI = PendingIntent.getBroadcast(
+                                view.context,
+                                0,
+                                sentIntent,
+                                PendingIntent.FLAG_IMMUTABLE
+                            )
+                            val deliveredPI = PendingIntent.getBroadcast(
+                                view.context,
+                                0,
+                                deliveredIntent,
+                                PendingIntent.FLAG_IMMUTABLE
+                            )
+
+                            view.context.registerReceiver(object : BroadcastReceiver() {
+                                override fun onReceive(context: Context, intent: Intent) {
+                                    when (resultCode) {
+                                        android.app.Activity.RESULT_OK -> Toast.makeText(
+                                            context,
+                                            "SMS sent",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                        SmsManager.RESULT_ERROR_GENERIC_FAILURE -> Toast.makeText(
+                                            context,
+                                            "SMS generic failure",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        SmsManager.RESULT_ERROR_NO_SERVICE -> Toast.makeText(
+                                            context,
+                                            "SMS no service",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        SmsManager.RESULT_ERROR_NULL_PDU -> Toast.makeText(
+                                            context,
+                                            "SMS null PDU",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+
+                                        SmsManager.RESULT_ERROR_RADIO_OFF -> Toast.makeText(
+                                            context,
+                                            "SMS radio off",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                            }, IntentFilter("SMS_SENT"), Context.RECEIVER_NOT_EXPORTED)
+                            view.context.registerReceiver(object : BroadcastReceiver() {
+                                override fun onReceive(context: Context, intent: Intent) {
+                                    when (resultCode) {
+                                        android.app.Activity.RESULT_OK -> Toast.makeText(
+                                            context,
+                                            "SMS delivered",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                        android.app.Activity.RESULT_CANCELED -> Toast.makeText(
+                                            context,
+                                            "SMS not delivered",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                }
+                            }, IntentFilter("SMS_DELIVERED"), Context.RECEIVER_NOT_EXPORTED)
+                            smsManager.sendTextMessage(
+                                phoneNumber,
+                                null,
+                                message,
+                                sentPI,
+                                deliveredPI
+                            )
+                        } else {
+                            smsManager.sendTextMessage(phoneNumber, null, message, null, null)
+                            Toast.makeText(view.context, "SMS sent", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        if (phoneNumber.isEmpty()) {
+                            Toast.makeText(view.context, "Number not set", Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(view.context, "SMS failed", Toast.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
@@ -214,32 +265,40 @@ class CustomAdapter(var mList: ArrayList<Action>,
         if (editable) {
             holder.textEditView.setOnFocusChangeListener { view, hasFocus ->
                 val position = holder.layoutPosition
-                val action = mList[position]
-                if (!updateCall && !hasFocus) {
-                    val editText = view as EditText
-                    action.text = editText.text.toString()
+                if (position >= 0 && position < mList.size) {
+                    val action = mList[position]
+                    if (!updateCall && !hasFocus) {
+                        val editText = view as EditText
+                        action.text = editText.text.toString()
+                    }
+                    updateCall = false
+                } else {
+                    val a = 1
                 }
-                updateCall = false
             }
             holder.sendSMSView.setOnClickListener { view ->
                 val position = holder.layoutPosition
-                val action = mList[position]
-                action.text = holder.textEditView.text.toString()
-                val checkBox = view as CheckBox
-                action.sendSMS = checkBox.isChecked
+                if (position >= 0 && position < mList.size) {
+                    val action = mList[position]
+                    action.text = holder.textEditView.text.toString()
+                    val checkBox = view as CheckBox
+                    action.sendSMS = checkBox.isChecked
+                }
             }
             holder.chipGroupView.setOnCheckedStateChangeListener { group, checkedIds ->
                 val position = holder.layoutPosition
-                val action = mList[position]
-                action.text = holder.textEditView.text.toString()
-                if (checkedIds.isNotEmpty()) {
-                    var newType =
-                        if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
-                    if (action.type != newType) {
-                        action.type = newType
-                        notifyItemChanged(position)
+                if (position >= 0 && position < mList.size) {
+                    val action = mList[position]
+                    action.text = holder.textEditView.text.toString()
+                    if (checkedIds.isNotEmpty()) {
+                        var newType =
+                            if (checkedIds[0] == holder.taskChipView.id) ActionType.TASK else ActionType.ACTION
+                        if (action.type != newType) {
+                            action.type = newType
+                            notifyItemChanged(position)
 //                        setControls(holder, action, position)
 //                        setVisuals(holder, action, position)
+                        }
                     }
                 }
             }
