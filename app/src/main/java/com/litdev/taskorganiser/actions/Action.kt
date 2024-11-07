@@ -120,7 +120,7 @@ data class Action(var text: String,
 
     fun default() : Action {
         return Action(
-            "Action",
+            "",
             ActionType.ACTION,
             false,
             ArrayList<Action>())
