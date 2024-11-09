@@ -2,7 +2,7 @@
     <string name="app_name">TaskOrganiser</string>
     <string name="info">Welcome to TaskOrganiser (or Tasky).
         \n\nThis is an app to organise Tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties.
-        \n\nOn this screen you can set a telephone number to send SMS messages to a supervising adult when selected Tasks are completed.
+        \n\nOn this screen you can set a telephone number to send SMS messages to a supporting adult when selected Tasks are completed.
         There is an option to globally allow (or not) SMS message sending.  If SMS is not required,
         then unselect this to prevent potential SMS permission requests on startup.
         \n\nYou can return to the main Home screen and reset all Actions to uncompleted by clicking the app icon on the top left or using the menu on the top right.
