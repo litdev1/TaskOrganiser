@@ -11,7 +11,12 @@
         <item name="android:itemBackground">@color/primaryDark</item>
     </style>
 
-    <style name="checkBoxStyle" parent="Theme.TaskOrganiser">
+    <style name="CheckBoxStyle" parent="Theme.TaskOrganiser">
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorAccent">@color/primaryLight</item>
+    </style>
+
+    <style name="AlertDialogStyle" parent="Theme.Material3.Dark.Dialog">
         <item name="colorPrimary">@color/primaryLight</item>
         <item name="colorAccent">@color/primaryLight</item>
     </style>

@@ -56,11 +56,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toTopOf="@+id/footerMain"
+                app:layout_constraintBottom_toTopOf="@+id/footer"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/footerMain"
+                android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <Button
-                    android:id="@+id/buttonMainHome"
+                    android:id="@+id/buttonHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_home_24dp"
@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/buttonMainBack"
+                    android:id="@+id/buttonBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_undo_24dp"

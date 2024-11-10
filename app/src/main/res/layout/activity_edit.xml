@@ -56,11 +56,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constrainedHeight="true"
-                app:layout_constraintBottom_toTopOf="@+id/footerEdit"
-                app:layout_constraintTop_toBottomOf="@+id/headerEdit" />
+                app:layout_constraintBottom_toTopOf="@+id/footer"
+                app:layout_constraintTop_toBottomOf="@+id/header" />
 
             <LinearLayout
-                android:id="@+id/footerEdit"
+                android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center_horizontal"
@@ -69,7 +69,7 @@
                 app:layout_constraintBottom_toBottomOf="parent">
 
                 <Button
-                    android:id="@+id/buttonEditHome"
+                    android:id="@+id/buttonHome"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_home_24dp"
@@ -84,7 +84,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/buttonEditBack"
+                    android:id="@+id/buttonBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_undo_24dp"
@@ -101,7 +101,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/headerEdit"
+                android:id="@+id/header"
                 android:layout_width="match_parent"
                 android:layout_height="58dp"
                 android:gravity="center_horizontal"
@@ -125,7 +125,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/buttonUndoEdit"
+                    android:id="@+id/buttonUndo"
                     android:contentDescription="Undo all edits"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/buttonEndEdit"
+                    android:id="@+id/buttonEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableLeft="@drawable/ic_done_24dp"

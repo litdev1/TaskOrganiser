@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:singleLine="false"
-                android:hint="Action description"
+                android:contentDescription="Action description"
                 android:importantForAccessibility="no"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -102,7 +102,7 @@
                 android:gravity="start|center_vertical"
                 android:text="Send SMS"
                 android:textColor="?android:attr/textColorPrimary"
-                android:theme="@style/checkBoxStyle"/>
+                android:theme="@style/CheckBoxStyle"/>
 
         </LinearLayout>
     </LinearLayout>

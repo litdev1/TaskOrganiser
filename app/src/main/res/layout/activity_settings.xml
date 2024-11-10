@@ -77,7 +77,7 @@
             android:text="Use SMS"
             android:textColor="?android:attr/textColorPrimary"
             android:padding="10dp"
-            android:theme="@style/checkBoxStyle"/>
+            android:theme="@style/CheckBoxStyle"/>
 
         <TextView
             android:id="@+id/info"

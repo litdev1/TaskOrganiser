@@ -17,6 +17,8 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import com.litdev.taskorganiser.actions.showMessage
 
 class EditActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null
@@ -32,11 +34,14 @@ class EditActivity : AppCompatActivity() {
             insets
         }
 
+        showMessage(this, "edit")
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
+            showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
+            showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -46,7 +51,7 @@ class EditActivity : AppCompatActivity() {
 
         val recyclerView = findViewById<RecyclerView>(R.id.edit_recycler)
 
-        findViewById<Button>(R.id.buttonEditHome).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonHome).setOnClickListener { view ->
             saveEdits()
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
@@ -55,7 +60,7 @@ class EditActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.buttonEditBack).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonBack).setOnClickListener { view ->
             if (null != ApplicationClass.instance.task.parent) {
                 saveEdits()
                 ApplicationClass.instance.task = ApplicationClass.instance.task.parent!!
@@ -64,6 +69,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonAdd).setOnClickListener { view ->
+            showMessage(this, "add")
             saveEdits()
             ApplicationClass.instance.task.children.add(ApplicationClass.instance.data.default())
             ApplicationClass.instance.data.reset()
@@ -72,7 +78,8 @@ class EditActivity : AppCompatActivity() {
             recyclerView.scrollToPosition(ApplicationClass.instance.task.children.size-1)
         }
 
-        findViewById<Button>(R.id.buttonUndoEdit).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonUndo).setOnClickListener { view ->
+            showMessage(this, "undo")
             ApplicationClass.instance.data.load(cacheDir.toString(), this)
             update()
             /*
@@ -81,7 +88,8 @@ class EditActivity : AppCompatActivity() {
             */
         }
 
-        findViewById<Button>(R.id.buttonEndEdit).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonEnd).setOnClickListener { view ->
+            showMessage(this, "end")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -90,6 +98,7 @@ class EditActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogStyle)
         saveEdits()
         ApplicationClass.instance.data.save(cacheDir.toString(), this)
     }

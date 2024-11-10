@@ -20,10 +20,11 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litdev.taskorganiser.actions.CustomAdapter
+import com.litdev.taskorganiser.actions.showMessage
 
 class MainActivity : AppCompatActivity() {
     private val SEND_SMS_PERMISSION_CODE = 100
-    var itemTouchHelper: ItemTouchHelper? = null
+    private var itemTouchHelper: ItemTouchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        showMessage(this, "start")
         if (ApplicationClass.instance.firstTime)
         {
             ApplicationClass.instance.firstTime = false
@@ -43,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
+            showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
+            showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
@@ -79,7 +83,8 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.my_toolbar))
         update()
 
-        findViewById<Button>(R.id.buttonMainHome).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonHome).setOnClickListener { view ->
+            showMessage(this, "home")
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
             if (ApplicationClass.instance.task.children.isNotEmpty()) {
@@ -88,7 +93,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.buttonMainBack).setOnClickListener { view ->
+        findViewById<Button>(R.id.buttonBack).setOnClickListener { view ->
+            showMessage(this, "back")
             if (null != ApplicationClass.instance.task.parent) {
 //                ApplicationClass.instance.task.state = StateType.NONE
 //                if (ApplicationClass.instance.task.isDone())
@@ -152,6 +158,18 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
 
         update()
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        //savedInstanceState.putString("MessageStart", messageStart);
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        //messageStart = savedInstanceState.getString("MessageStart")
     }
 
     fun update()

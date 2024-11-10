@@ -25,6 +25,7 @@ import com.litdev.taskorganiser.ApplicationClass
 import com.litdev.taskorganiser.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
+import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
@@ -133,6 +134,20 @@ class CustomAdapter(var mList: ArrayList<Action>,
         }
     }
 
+    fun doTask(action: Action) {
+        saveEdits()
+        ApplicationClass.instance.task = action
+        update()
+    }
+
+    fun doAction(action: Action) {
+        val parent = action.parent
+        if (parent?.children?.last() == action && parent.parent != null) {
+            ApplicationClass.instance.task = parent.parent!!
+            update()
+        }
+    }
+
     fun setEvents(holder: ViewHolder)
     {
         //Click events
@@ -148,22 +163,19 @@ class CustomAdapter(var mList: ArrayList<Action>,
 //                setVisuals(holder, action, position)
                 }
                 if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
-                    saveEdits()
-                    ApplicationClass.instance.task = action
-                    update()
-                }
+                    showMessage(view.context, "task")
+                    doTask(action)
+               }
                 if (action.type == ActionType.ACTION && !editable && action.parent != null) {
-                    val parent = action.parent
-                    if (parent?.children?.last() == action && parent.parent != null) {
-                        ApplicationClass.instance.task = parent.parent!!
-                        update()
-                    }
-                }
+                    showMessage(view.context, "action")
+                    doAction(action)
+               }
                 if (ApplicationClass.instance.canUseSMS &&
                     ApplicationClass.instance.settings.useSMS &&
                     !editable &&
                     oldState == StateType.NONE && action.sendSMS
                 ) {
+                    showMessage(view.context, "sms")
                     val phoneNumber = ApplicationClass.instance.settings.phone
                     val message = "Completed " +
                             if (action.type == ActionType.TASK) "task" else "action" + " : " + action.text
@@ -385,11 +397,11 @@ class CustomAdapter(var mList: ArrayList<Action>,
                             // below line is to display our snackbar with action.
                             val snackBar = Snackbar.make(holder.itemView, "Deleted " + action.text, Snackbar.LENGTH_SHORT)
 //                            val layoutParams = snackBar.view.layoutParams
-//                            layoutParams.anchorId = R.id.footerEdit //Id for your bottomNavBar or TabLayout
+//                            layoutParams.anchorId = R.id.footer //Id for your bottomNavBar or TabLayout
 //                            layoutParams.anchorGravity = Gravity.TOP
 //                            layoutParams.gravity = Gravity.TOP
 //                            snackBar.view.layoutParams = layoutParams
-                            snackBar.setAnchorView(R.id.footerEdit)
+                            snackBar.setAnchorView(R.id.footer)
                             snackBar.setAction(
                                 "Undo",
                                 View.OnClickListener {
@@ -403,6 +415,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         }
                         else
                         {
+                            showMessage(holder.itemView.context, if (action.type == ActionType.TASK) "swipeTask" else "swipeAction")
                             val parent = action.parent
                             action.reset()
                             action.setParents(parent)
