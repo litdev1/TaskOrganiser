@@ -25,7 +25,6 @@ import com.litdev.taskorganiser.ApplicationClass
 import com.litdev.taskorganiser.R
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import java.util.Collections
 
@@ -285,7 +284,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     }
                     updateCall = false
                 } else {
-                    val a = 1
+//                    val a = 1
                 }
             }
             holder.sendSMSView.setOnClickListener { view ->

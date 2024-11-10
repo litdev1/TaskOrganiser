@@ -161,13 +161,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
-        super.onSaveInstanceState(savedInstanceState);
+        super.onSaveInstanceState(savedInstanceState)
 
-        //savedInstanceState.putString("MessageStart", messageStart);
+        //savedInstanceState.putString("MessageStart", messageStart)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState);
+        super.onRestoreInstanceState(savedInstanceState)
 
         //messageStart = savedInstanceState.getString("MessageStart")
     }

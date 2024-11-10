@@ -98,7 +98,6 @@ class EditActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        val builder = AlertDialog.Builder(this, R.style.AlertDialogStyle)
         saveEdits()
         ApplicationClass.instance.data.save(cacheDir.toString(), this)
     }

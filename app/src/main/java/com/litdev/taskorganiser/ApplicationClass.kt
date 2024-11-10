@@ -1,14 +1,11 @@
 package com.litdev.taskorganiser
 
 import android.app.Application
-import android.content.Context
 import com.litdev.taskorganiser.actions.Action
 import com.litdev.taskorganiser.actions.ActionType
 import com.litdev.taskorganiser.actions.Settings
 import com.litdev.taskorganiser.actions.loadMessages
-import com.litdev.taskorganiser.actions.saveMessages
 import java.io.File
-import kotlin.apply
 
 class ApplicationClass: Application() {
     var firstTime: Boolean = true

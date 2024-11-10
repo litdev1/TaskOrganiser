@@ -36,7 +36,7 @@ fun saveMessages() {
     for ((key, value) in messages) {
         editor.putString(key, value)
     }
-    editor.commit()
+    editor.apply()
 }
 
 fun loadMessages() {
