@@ -14,7 +14,6 @@
 
         <Button
             android:id="@+id/buttonExport"
-            android:contentDescription="Export tasks to Download"
             style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +25,6 @@
 
         <Button
             android:id="@+id/buttonImport"
-            android:contentDescription="Import tasks from Download"
             style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,7 +36,6 @@
 
         <Button
             android:id="@+id/buttonAppend"
-            android:contentDescription="Append tasks from Download"
             style="@style/Widget.Material3.Button.ElevatedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -35,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:singleLine="false"
+                android:hint="Unset action"
                 android:contentDescription="Action description"
                 android:importantForAccessibility="no"
                 android:textSize="20sp"
