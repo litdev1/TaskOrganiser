@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:padding="5dp"
-            android:text="Reset help advisory popups"
+            android:text="Reset advisory messages"
             android:importantForAccessibility="no"
             android:textColor="?android:attr/textColorPrimary"
             app:cornerRadius="10dp" />

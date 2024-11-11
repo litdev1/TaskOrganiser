@@ -116,7 +116,7 @@ class ExportFragment : Fragment() {
 
         view.findViewById<Button>(R.id.buttonResetHelp).setOnClickListener {
             MSG.resetMessages()
-            Toast.makeText(context, "Help messages reset", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "Advisory messages reset", Toast.LENGTH_SHORT).show()
         }
 
         return view

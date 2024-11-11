@@ -44,9 +44,12 @@ class MainActivity : AppCompatActivity() {
                     arrayOf(Manifest.permission.SEND_SMS),
                     SEND_SMS_PERMISSION_CODE
                 )
+            } else {
+                MSG.showMessage(this, "start")
             }
         } else {
             ApplicationClass.instance.canUseSMS = true
+            MSG.showMessage(this, "start")
         }
 
         if (!MSG.delayReset) {
