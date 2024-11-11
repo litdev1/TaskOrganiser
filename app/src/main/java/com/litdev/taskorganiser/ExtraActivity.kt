@@ -10,7 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.litdev.taskorganiser.actions.showMessage
+import com.litdev.taskorganiser.actions.MSG
 
 class ExtraActivity : AppCompatActivity() {
 
@@ -25,12 +25,12 @@ class ExtraActivity : AppCompatActivity() {
         }
 
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
+            MSG.showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
+            MSG.showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

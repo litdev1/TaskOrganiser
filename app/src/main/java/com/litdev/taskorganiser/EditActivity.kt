@@ -17,8 +17,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
-import com.litdev.taskorganiser.actions.showMessage
+import com.litdev.taskorganiser.actions.MSG
 
 class EditActivity : AppCompatActivity() {
     var itemTouchHelper: ItemTouchHelper? = null
@@ -34,14 +33,14 @@ class EditActivity : AppCompatActivity() {
             insets
         }
 
-        showMessage(this, "edit")
+        MSG.showMessage(this, "edit")
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
+            MSG.showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
+            MSG.showMessage(this, "reset")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
@@ -69,7 +68,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonAdd).setOnClickListener { view ->
-            showMessage(this, "add")
+            MSG.showMessage(this, "add")
             saveEdits()
             ApplicationClass.instance.task.children.add(ApplicationClass.instance.data.default())
             ApplicationClass.instance.data.reset()
@@ -79,7 +78,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonUndo).setOnClickListener { view ->
-            showMessage(this, "undo")
+            MSG.showMessage(this, "undo")
             ApplicationClass.instance.data.load(cacheDir.toString(), this)
             update()
             /*
@@ -89,7 +88,7 @@ class EditActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonEnd).setOnClickListener { view ->
-            showMessage(this, "end")
+            MSG.showMessage(this, "end")
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

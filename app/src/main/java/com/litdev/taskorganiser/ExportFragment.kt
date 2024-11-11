@@ -16,6 +16,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import android.provider.OpenableColumns
 import com.litdev.taskorganiser.actions.Action
+import com.litdev.taskorganiser.actions.MSG
 
 class ExportFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +112,11 @@ class ExportFragment : Fragment() {
 
             mode = 2
             fileActivityResult.launch(intent)
+        }
+
+        view.findViewById<Button>(R.id.buttonResetHelp).setOnClickListener {
+            MSG.resetMessages()
+            Toast.makeText(context, "Help messages reset", Toast.LENGTH_SHORT).show()
         }
 
         return view

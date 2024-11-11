@@ -4,7 +4,7 @@ import android.app.Application
 import com.litdev.taskorganiser.actions.Action
 import com.litdev.taskorganiser.actions.ActionType
 import com.litdev.taskorganiser.actions.Settings
-import com.litdev.taskorganiser.actions.loadMessages
+import com.litdev.taskorganiser.actions.MSG
 import java.io.File
 
 class ApplicationClass: Application() {
@@ -37,6 +37,6 @@ class ApplicationClass: Application() {
 
         instance = this
         data.load(cacheDir.toString(), this)
-        loadMessages()
+        MSG.loadMessages()
     }
 }

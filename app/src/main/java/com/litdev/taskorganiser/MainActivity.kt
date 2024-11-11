@@ -20,9 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litdev.taskorganiser.actions.CustomAdapter
-import com.litdev.taskorganiser.actions.delayEnd
-import com.litdev.taskorganiser.actions.delayReset
-import com.litdev.taskorganiser.actions.showMessage
+import com.litdev.taskorganiser.actions.MSG
 
 class MainActivity : AppCompatActivity() {
     private val SEND_SMS_PERMISSION_CODE = 100
@@ -51,11 +49,11 @@ class MainActivity : AppCompatActivity() {
             ApplicationClass.instance.canUseSMS = true
         }
 
-        if (delayReset) {
-            showMessage(this, "reset")
+        if (!MSG.delayReset) {
+            MSG.showMessage(this, "reset")
         }
-        if (delayEnd) {
-            showMessage(this, "end")
+        if (!MSG.delayEnd) {
+            MSG.showMessage(this, "end")
         }
         if (ApplicationClass.instance.firstTime)
         {
@@ -65,8 +63,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
-            showMessage(this, "reset")
+            MSG.delayReset = false
+            MSG.showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
@@ -77,8 +75,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
-            showMessage(this, "reset")
-            showMessage(this, "reset")
+            MSG.delayReset = false
+            MSG.showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
@@ -93,7 +91,7 @@ class MainActivity : AppCompatActivity() {
         update()
 
         findViewById<Button>(R.id.buttonHome).setOnClickListener { view ->
-            showMessage(this, "home")
+            MSG.showMessage(this, "home")
             ApplicationClass.instance.task = ApplicationClass.instance.data
             update()
             if (ApplicationClass.instance.task.children.isNotEmpty()) {
@@ -103,7 +101,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<Button>(R.id.buttonBack).setOnClickListener { view ->
-            showMessage(this, "back")
+            MSG.showMessage(this, "back")
             if (null != ApplicationClass.instance.task.parent) {
 //                ApplicationClass.instance.task.state = StateType.NONE
 //                if (ApplicationClass.instance.task.isDone())
@@ -126,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "App will be unable to send SMS texts", Toast.LENGTH_LONG).show()
             }
         }
-        showMessage(this, "start")
+        MSG.showMessage(this, "start")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

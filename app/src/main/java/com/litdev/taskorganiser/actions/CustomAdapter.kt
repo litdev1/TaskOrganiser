@@ -3,6 +3,7 @@ package com.litdev.taskorganiser.actions
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
@@ -11,6 +12,8 @@ import android.telephony.SmsManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
@@ -162,11 +165,11 @@ class CustomAdapter(var mList: ArrayList<Action>,
 //                setVisuals(holder, action, position)
                 }
                 if (action.type == ActionType.TASK && (editable || action.children.isNotEmpty())) {
-                    showMessage(view.context, "task")
+                    MSG.showMessage(view.context, "task")
                     doTask(action)
                }
                 if (action.type == ActionType.ACTION && !editable && action.parent != null) {
-                    showMessage(view.context, "action")
+                    MSG.showMessage(view.context, "action")
                     doAction(action)
                }
                 if (ApplicationClass.instance.canUseSMS &&
@@ -174,7 +177,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                     !editable &&
                     oldState == StateType.NONE && action.sendSMS
                 ) {
-                    showMessage(view.context, "sms")
+                    MSG.showMessage(view.context, "sms")
                     val phoneNumber = ApplicationClass.instance.settings.phone
                     val message = "Completed " +
                             if (action.type == ActionType.TASK) "task" else "action" + " : " + action.text
@@ -283,8 +286,23 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         action.text = editText.text.toString()
                     }
                     updateCall = false
-                } else {
-//                    val a = 1
+                }
+            }
+            holder.textEditView.setOnEditorActionListener  { view, actionId, event ->
+                val position = holder.layoutPosition
+                if (position >= 0 && position < mList.size) {
+                    val action = mList[position]
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        val editText = view as EditText
+                        action.text = editText.text.toString()
+                        hideKeyboard(view)
+                        true
+                    } else {
+                        false
+                    }
+                }
+                else {
+                    false
                 }
             }
             holder.sendSMSView.setOnClickListener { view ->
@@ -414,7 +432,7 @@ class CustomAdapter(var mList: ArrayList<Action>,
                         }
                         else
                         {
-                            showMessage(holder.itemView.context, if (action.type == ActionType.TASK) "swipeTask" else "swipeAction")
+                            MSG.showMessage(holder.itemView.context, if (action.type == ActionType.TASK) "swipeTask" else "swipeAction")
                             val parent = action.parent
                             action.reset()
                             action.setParents(parent)
@@ -436,5 +454,10 @@ class CustomAdapter(var mList: ArrayList<Action>,
             }
         })
         return itemTouchHelper
+    }
+
+    fun hideKeyboard(view: View) {
+        val inputManager = view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }

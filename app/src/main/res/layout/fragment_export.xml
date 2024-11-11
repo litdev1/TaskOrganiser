@@ -45,6 +45,23 @@
             android:textColor="?android:attr/textColorPrimary"
             app:cornerRadius="10dp" />
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+
+        <Button
+            android:id="@+id/buttonResetHelp"
+            style="@style/Widget.Material3.Button.ElevatedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
+            android:paddingHorizontal="5dp"
+            android:text="Reset help advisory popups"
+            android:textColor="?android:attr/textColorPrimary"
+            app:cornerRadius="10dp" />
+
     </LinearLayout>
 
 </FrameLayout>
