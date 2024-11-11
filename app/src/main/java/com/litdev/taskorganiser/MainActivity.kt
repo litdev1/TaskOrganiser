@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.litdev.taskorganiser.actions.CustomAdapter
+import com.litdev.taskorganiser.actions.delayEnd
+import com.litdev.taskorganiser.actions.delayReset
 import com.litdev.taskorganiser.actions.showMessage
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +38,25 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        showMessage(this, "start")
+        // Check if the permission is already granted for SMS
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ApplicationClass.instance.settings.useSMS) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.SEND_SMS),
+                    SEND_SMS_PERMISSION_CODE
+                )
+            }
+        } else {
+            ApplicationClass.instance.canUseSMS = true
+        }
+
+        if (delayReset) {
+            showMessage(this, "reset")
+        }
+        if (delayEnd) {
+            showMessage(this, "end")
+        }
         if (ApplicationClass.instance.firstTime)
         {
             ApplicationClass.instance.firstTime = false
@@ -45,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         (findViewById<ImageView>(R.id.toolBarImage)!!).setOnClickListener { view ->
+            showMessage(this, "reset")
             showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
@@ -57,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
         (findViewById<TextView>(R.id.toolBarTitle)!!).setOnClickListener { view ->
             showMessage(this, "reset")
+            showMessage(this, "reset")
             ApplicationClass.instance.data.reset()
             ApplicationClass.instance.data.setParents(null)
             ApplicationClass.instance.task = ApplicationClass.instance.data
@@ -65,19 +87,6 @@ class MainActivity : AppCompatActivity() {
                 val recyclerView = findViewById<RecyclerView>(R.id.main_recycler)
                 recyclerView.scrollToPosition(0)
             }
-        }
-
-        // Check if the permission is already granted for SMS
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            if (ApplicationClass.instance.settings.useSMS) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.SEND_SMS),
-                    SEND_SMS_PERMISSION_CODE
-                )
-            }
-        } else {
-            ApplicationClass.instance.canUseSMS = true
         }
 
         setSupportActionBar(findViewById(R.id.my_toolbar))
@@ -117,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "App will be unable to send SMS texts", Toast.LENGTH_LONG).show()
             }
         }
+        showMessage(this, "start")
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

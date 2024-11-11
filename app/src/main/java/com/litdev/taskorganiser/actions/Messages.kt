@@ -12,8 +12,8 @@ val messages = mutableMapOf("start" to "This is an app to organise tasks and tic
             "\n\nActions and tasks can be reverted with a left swipe.",
     "sms" to "You clicked an item that can send an SMS." +
             "\n\nThis requires a telephone number to be entered on the settings screen.",
-    "home" to "This will navigate you to the Home screen, without any tasks or actions being reset.",
-    "back" to "This will navigate you to the parent task, without any tasks or actions being reset.",
+    "home" to "Navigated you to Home, without any tasks or actions being reset.",
+    "back" to "Navigated you to parent task, without any tasks or actions being reset.",
     "edit" to "You can edit tasks and actions here." +
             "\n\n► \'Add\' to add an action to the end of the current list" +
             "\n► Delete (left swipe)" +
@@ -21,13 +21,15 @@ val messages = mutableMapOf("start" to "This is an app to organise tasks and tic
 //            "\n► Set the task or action type, text description and optional SMS" +
             "\n► \'Undo\' to undo all editing" +
             "\n► \'Done\' to save and end editing",
-    "reset" to "This will navigate you to the Home screen, resetting all tasks and actions.",
+    "reset" to "Navigated you to the Home screen, resetting all tasks and actions.",
     "add" to "A new action is added to the end of the current task list.",
     "undo" to "All edits in the current session have been reverted.",
     "end" to "All edits saved and edit session ended.",
     "swipeTask" to "This task and all sub-actions have been reset.",
-    "swipeAction" to "This action has been reset.",
-)
+    "swipeAction" to "This action has been reset.")
+
+var delayReset = false
+var delayEnd = false
 
 fun saveMessages() {
     val context = ApplicationClass.instance
@@ -36,7 +38,7 @@ fun saveMessages() {
     for ((key, value) in messages) {
         editor.putString(key, value)
     }
-    editor.apply()
+    editor.commit()
 }
 
 fun loadMessages() {
@@ -49,13 +51,21 @@ fun loadMessages() {
 
 fun showMessage(context: Context, key: String) {
     if (!messages[key].isNullOrEmpty()) {
-        val builder = AlertDialog.Builder(context, R.style.AlertDialogStyle)
-        builder.setMessage(messages[key])
-        builder.setPositiveButton("Got it", { dialog, i: Int ->
-            messages[key] = ""
-            saveMessages()
-        })
-        val dialog = builder.create()
-        dialog.show()
+        if (key == "reset" && !delayReset) {
+            delayReset = true
+        }
+        else if (key == "end" && !delayEnd) {
+            delayEnd = true
+        }
+        else {
+            val builder = AlertDialog.Builder(context, R.style.AlertDialogStyle)
+            builder.setMessage(messages[key])
+            builder.setPositiveButton("Got it", { dialog, i: Int ->
+                messages[key] = ""
+                saveMessages()
+            })
+            val dialog = builder.create()
+            dialog.show()
+        }
     }
 }
