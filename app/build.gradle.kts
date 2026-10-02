@@ -11,7 +11,7 @@ android {
         applicationId = "com.litdev.taskorganiser"
         minSdk = 24
         targetSdk = 37
-        versionCode = 13
+        versionCode = 14
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -25,6 +25,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
