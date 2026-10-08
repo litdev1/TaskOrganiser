@@ -1,4 +1,9 @@
 # Privacy statement for Task Organiser
+
+## Developer Details
+LITDEV SOFTWARE LIMITED
+admin@litdev.uk
+
 ## Overview
 This is an app to organise tasks and tick them off as they are done.  It is aimed at independent supported living for users with memory difficulties.
 
