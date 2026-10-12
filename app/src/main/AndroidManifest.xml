@@ -6,7 +6,6 @@
         android:name="android.hardware.telephony"
         android:required="false" />
 
-    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:name=".ApplicationClass"

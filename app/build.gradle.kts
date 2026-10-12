@@ -11,7 +11,7 @@ android {
         applicationId = "com.litdev.taskorganiser"
         minSdk = 24
         targetSdk = 37
-        versionCode = 14
+        versionCode = 15
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

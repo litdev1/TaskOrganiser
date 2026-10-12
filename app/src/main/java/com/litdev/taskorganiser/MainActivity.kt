@@ -1,19 +1,14 @@
 package com.litdev.taskorganiser
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -23,7 +18,6 @@ import com.litdev.taskorganiser.actions.CustomAdapter
 import com.litdev.taskorganiser.actions.MSG
 
 class MainActivity : AppCompatActivity() {
-    private val SEND_SMS_PERMISSION_CODE = 100
     private var itemTouchHelper: ItemTouchHelper? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,21 +30,7 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Check if the permission is already granted for SMS
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            if (ApplicationClass.instance.settings.useSMS) {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.SEND_SMS),
-                    SEND_SMS_PERMISSION_CODE
-                )
-            } else {
-                MSG.showMessage(this, "start")
-            }
-        } else {
-            ApplicationClass.instance.canUseSMS = true
-            MSG.showMessage(this, "start")
-        }
+        MSG.showMessage(this, "start")
 
         if (!MSG.delayReset) {
             MSG.showMessage(this, "reset")
@@ -117,18 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Handle the permission request result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == SEND_SMS_PERMISSION_CODE) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                ApplicationClass.instance.canUseSMS = true
-            } else {
-                Toast.makeText(this, "App will be unable to send SMS texts", Toast.LENGTH_LONG).show()
-            }
-        }
-        MSG.showMessage(this, "start")
-    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu,menu)

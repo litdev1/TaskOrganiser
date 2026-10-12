@@ -10,7 +10,6 @@ import java.io.File
 class ApplicationClass: Application() {
     var firstTime: Boolean = true
     val version: Int = 1
-    var canUseSMS: Boolean = false
     var settings: Settings = Settings(
         "",
         true
